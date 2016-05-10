@@ -1,18 +1,23 @@
 {
-    "title": "Web Site Filter",
-    "name": "wsf",
-    "version": "0.1.5", "ON VERSION BUMP": "lint, versions.org, git commit",
-    "description": "A content filter for websites, emulating dansguardian.",
-    "main": "index.js",
     "author": "serv-inc",
+    "description": "A content filter for websites, emulating dansguardian.",
     "engines": {
 	"firefox": "38.0a1 49.0",
 	"fennec": "38.0a1 49.0"
     },
-    "license": "MIT",
+    "jshintConfig": {
+	"predef": ["require", "exports", "self"],
+	"module": true,
+	"esversion": 6,
+	"strict": "global",
+	"browser": true
+    },
     "keywords": [
 	"jetpack", "dansguardian", "content filter", "adult filter"
     ],
+    "license": "MIT",
+    "main": "index.js",
+    "name": "wsf",
     "permissions": {"private-browsing": true},
     "preferences": [ {
 	"name": "limit",
@@ -128,5 +133,7 @@
        "description": "each match of this list gives 150 points",
        "type": "string",
        "value": "warning! you must be over 18 to proceed|nsfw #Abbreviation for Not Safe For Work|not safe for work"
-   }]
+   }],
+    "title": "Web Site Filter",
+    "version": "0.1.6", "ON VERSION BUMP": "lint, README.org version, git commit"
 }
