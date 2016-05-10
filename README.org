@@ -2,6 +2,9 @@
 Code for https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
 
 * versions
+** 0.1.6
+*** Fixed
+Changing score did not affect anything.
 ** 0.1.5
 *** Fixed
 Sites like google with many =<script>= tags made loading very slow.
