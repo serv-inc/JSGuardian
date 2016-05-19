@@ -30,7 +30,7 @@ function scan() {
 
 function createText() {
     let out = 'page was blocked (score=' + score + ') due to: \n';
-    all_matches.forEach((el) => out += el.substr(0,300) + ', ');
+    all_matches.forEach((el) => out += '"' + el.substr(0,300) + '", ');
     return out;
 }
 
