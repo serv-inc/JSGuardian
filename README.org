@@ -2,6 +2,8 @@
 Code for https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
 
 * versions
+** 0.2.0
+*** Added: quotes surrounding single matches
 ** 0.1.6
 *** Fixed
 Changing score did not affect anything.
