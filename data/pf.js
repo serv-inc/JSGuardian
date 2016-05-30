@@ -13,7 +13,7 @@ let score = 0;
 let all_matches = [];
 
 function scan() {
-    const REGEX = RegExp(REGEXES[i], 'g');
+    const REGEX = RegExp(REGEXES[i], 'gi');
     let matches = new Set(SITE_TEXT.match(REGEX));
     score += matches.size * REGEX_VALUES[i];
     matches.forEach((el) => all_matches.push(el));

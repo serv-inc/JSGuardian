@@ -1,6 +1,8 @@
 * web-site-filter
 Code for addon at https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
 * versions
+** 0.2.2
+*** Fixed: did not find multi-line matches
 ** 0.2.1
 *** Fixed: old mods were not destroyed on re-setting limit.
 ** 0.2.0
