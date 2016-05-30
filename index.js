@@ -4,6 +4,7 @@ const Simple = require('sdk/simple-prefs');
 let limit = Simple.prefs.limit;
 Simple.on("limit", function() {
     limit = Simple.prefs.limit;
+    mod.destroy();
     mod = create(limit);
 });
 let mod = create(limit);

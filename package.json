@@ -135,5 +135,5 @@
        "value": "warning! you must be over 18 to proceed|nsfw #Abbreviation for Not Safe For Work|not safe for work"
    }],
     "title": "Web Site Filter",
-    "version": "0.2.0", "ON VERSION BUMP": "lint, README.org version, git commit, upload"
+    "version": "0.2.1", "ON VERSION BUMP": "lint, README.org version, git commit, upload"
 }
