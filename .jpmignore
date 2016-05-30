@@ -1,0 +1,6 @@
+local/
+.git/
+Makefile
+*~
+*xpi
+.jpmignore

@@ -1,7 +1,8 @@
 * web-site-filter
-Code for https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
-
+Code for addon at https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
 * versions
+** 0.2.1
+*** Fixed: old mods were not destroyed on re-setting limit.
 ** 0.2.0
 *** Added: quotes surrounding single matches
 ** 0.1.6
