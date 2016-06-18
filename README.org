@@ -1,6 +1,8 @@
 * web-site-filter
 Code for addon at https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
 * versions
+** 0.3.0
+*** Doc: did not copy dg appropriate values for age groups
 ** 0.2.2
 *** Fixed: did not find multi-line matches
 ** 0.2.1
