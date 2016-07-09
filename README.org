@@ -1,6 +1,12 @@
 * web-site-filter
-Code for addon at https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
+A content filter for websites, emulating dansguardian.
+* Code for addon at https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
 * versions
+** 0.3.2
+*** ?: multi-process was not enabled
+*** default was at 60, which is for small children, now it's at 160
+** 0.3.1
+*** Bug: counted different cases differently
 ** 0.3.0
 *** Doc: did not copy dg appropriate values for age groups
 ** 0.2.2
