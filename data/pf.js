@@ -14,7 +14,11 @@ let all_matches = [];
 
 function scan() {
     const REGEX = RegExp(REGEXES[i], 'gi');
-    let matches = new Set(SITE_TEXT.match(REGEX));
+    let tmp = SITE_TEXT.match(REGEX);
+    let matches = new Set();
+    if ( tmp !== null ) {
+        tmp.forEach((el) => {matches.add(el.toLowerCase());});
+    }
     score += matches.size * REGEX_VALUES[i];
     matches.forEach((el) => all_matches.push(el));
 //    console.log('matches: ' + JSON.stringify(matches))
