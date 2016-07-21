@@ -6,3 +6,4 @@ Makefile
 .jpmignore
 local
 test
+.gitignore
