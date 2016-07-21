@@ -2,6 +2,12 @@
 A content filter for websites, emulating dansguardian.
 * Code for addon at https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
 * versions
+** 0.3.4
+   - multiprocess as permission ... ;-)
+** 0.3.3
+*** reviewer feedback
+   - multiprocess spelling
+   - had .gitignore
 ** 0.3.2
 *** ?: multi-process was not enabled
 *** default was at 60, which is for small children, now it's at 160

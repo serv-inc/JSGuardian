@@ -17,9 +17,11 @@
     ],
     "license": "MIT",
     "main": "index.js",
-    "multiplrocess": true,
     "name": "wsf",
-    "permissions": {"private-browsing": true},
+    "permissions": {
+        "multiprocess": true,
+        "private-browsing": true
+    },
     "preferences": [ {
         "name": "limit",
         "title": "Naughtyness Limit",
@@ -142,5 +144,5 @@
         "value": "warning! you must be over 18 to proceed|nsfw #Abbreviation for Not Safe For Work|not safe for work"
     }],
     "title": "Web Site Filter",
-    "version": "0.3.2", "@+": "lint, README.org version, git co+push, upload"
+    "version": "0.3.4", "@+": "lint, README.org version, git co+push, upload"
 }
