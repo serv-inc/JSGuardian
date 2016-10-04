@@ -2,6 +2,8 @@
 A content filter for websites, emulating dansguardian.
 * Code for addon at https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
 * versions
+** 0.4.0
+   - previous versions lacked whitelist
 ** 0.3.4
    - multiprocess as permission ... ;-)
 ** 0.3.3
