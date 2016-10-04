@@ -29,6 +29,12 @@
         "type": "integer",
         "value": 160
     }, {
+        "name": "whitelist",
+        "title": "Allow These Sites",
+        "description": "Regular Expression to allow sites to not be scanned. The default allows dansguardian.com and mozilla.org",
+        "type": "string",
+        "value": ".*(mozilla.org|dansguardian.com).*"
+    }, {
         "name": "multi",
         "title": "Multiline match",
         "description": "Match multi-line. (This option takes more time.)",
@@ -144,5 +150,5 @@
         "value": "warning! you must be over 18 to proceed|nsfw #Abbreviation for Not Safe For Work|not safe for work"
     }],
     "title": "Web Site Filter",
-    "version": "0.3.4", "@+": "lint, README.org version, git co+push, upload"
+    "version": "0.4.0", "@+": "lint, README.org version, git co+push, upload"
 }
