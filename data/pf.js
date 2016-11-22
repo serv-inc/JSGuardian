@@ -1,6 +1,5 @@
 "use strict";
 
-// currently no multi-line match
 const LIMIT = self.options.limit;
 const REGEX_VALUES = self.options.regexValues;
 const REGEXES = self.options.regexes;

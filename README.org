@@ -2,6 +2,8 @@
 A content filter for websites, emulating dansguardian.
 * Code for addon at https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
 * versions
+** 0.5.12
+   lacked safe search (google, yahoo, bing, ddg)
 ** 0.4.0
    - previous versions lacked whitelist
 ** 0.3.4

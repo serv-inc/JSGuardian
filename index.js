@@ -1,11 +1,10 @@
 "use strict";
 const Simple = require('sdk/simple-prefs');
 
-Simple.on("limit", onPrefChange);
-Simple.on("multi", onPrefChange);
-Simple.on("whitelist", onPrefChange);
+const Safe = require("safe.js");
 
 let mod = create();
+Simple.on("", onPrefChange);
 
 function create(limit) {
     return require("sdk/page-mod").PageMod({
@@ -41,3 +40,9 @@ function ml(reg) {
 	return reg;
     }
 }
+
+let safe_search = new Safe.Search();
+
+exports.onUnload = function(reason) {
+    safe_search.stop();
+};
