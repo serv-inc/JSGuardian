@@ -41,6 +41,12 @@
         "type": "bool",
         "value": false
     }, {
+        "name": "safeSearch",
+        "title": "Safe Search",
+        "description": "Toggle Safe Search on Google, Yahoo, Bing, YouTube, DuckDuckGo",
+        "type": "bool",
+        "value": false
+    }, {
         "name": "_WARNING",
         "title": "WARNING!!! WARNING!!!",
         "description": "If you scroll down, you will see the words used to rate the content. These might offend. Continue at your own risk.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
@@ -150,5 +156,5 @@
         "value": "warning! you must be over 18 to proceed|nsfw #Abbreviation for Not Safe For Work|not safe for work"
     }],
     "title": "Web Site Filter",
-    "version": "0.6.1", "@+": "lint, README.org version, git co+push, upload"
+    "version": "0.6.2", "@+": "lint, README.org version, git co+push, upload"
 }
