@@ -41,8 +41,13 @@ function ml(reg) {
     }
 }
 
-let safe_search = new Safe.Search();
+let safe_search;
+if ( Simple.prefs.safeSearch ) {
+    safe_search = new Safe.Search();
+}
 
 exports.onUnload = function(reason) {
-    safe_search.stop();
+    if ( Simple.prefs.safeSearch ) {
+        safe_search.stop();
+    }
 };
