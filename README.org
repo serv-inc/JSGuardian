@@ -1,47 +1,57 @@
 * web-site-filter
-A content filter for websites, emulating dansguardian.
-* Code for addon at https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
-* versions
+A content filter for websites, emulating dansguardian's score-based filter.
+* Code for Addon at https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
+* Versions
+** 0.6.2
+*** Added
+    Lacked toggle to turn safe search on/off
 ** 0.6.1
+*** Added
    lacked (moderate) safe search on youtube
 ** 0.5.12
+*** Added
    lacked safe search (google, yahoo, bing, ddg)
 ** 0.4.0
-   - previous versions lacked whitelist
+*** Added
+   previous versions lacked whitelist
 ** 0.3.4
-   - multiprocess as permission ... ;-)
+*** Fixed
+   multiprocess as permission ... ;-)
 ** 0.3.3
 *** reviewer feedback
-   - multiprocess spelling
-   - had .gitignore
+    multiprocess spelling
+    had .gitignore
 ** 0.3.2
-*** ?: multi-process was not enabled
-*** default was at 60, which is for small children, now it's at 160
+*** Added
+   ?: multi-process was not enabled
+   default was at 60, which is for small children, now it's at 160
 ** 0.3.1
-*** Bug: counted different cases differently
+*** Fixed
+   Bug: counted different cases differently
 ** 0.3.0
-*** Doc: did not copy dg appropriate values for age groups
+*** Added
+   Doc: did not copy dg appropriate values for age groups
 ** 0.2.2
-*** Fixed: did not find multi-line matches
+*** Fixed
+    did not find multi-line matches
 ** 0.2.1
-*** Fixed: old mods were not destroyed on re-setting limit.
+*** Fixed
+    old mods were not destroyed on re-setting limit.
 ** 0.2.0
-*** Added: quotes surrounding single matches
+*** Added
+    quotes surrounding single matches
 ** 0.1.6
 *** Fixed
 Changing score did not affect anything.
 ** 0.1.5
 *** Fixed
 Sites like google with many =<script>= tags made loading very slow.
-
 ** 0.1.2
 *** Fixed
 Was not installable on recent android firefox (45).
-
 ** 0.1.1
 *** Added
 Previous version used innerHTML.
-
 ** 0.1.0
 *** Added
 Had no message which parts triggered filter if blocked.
