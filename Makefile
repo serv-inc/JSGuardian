@@ -1,7 +1,7 @@
 USER=$(shell cat local/moz_uid)
 PASS=$(shell cat local/moz_pass)
 
-all: sign
+all: xpi
 
 sign: lint clean
 	jpm -v sign --api-key $(USER) --api-secret $(PASS)

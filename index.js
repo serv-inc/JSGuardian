@@ -30,6 +30,13 @@ function create(limit) {
 function onPrefChange() {
     mod.destroy();
     mod = create();
+    if ( Simple.prefs.safeSearch ) {
+        safe_search_mod = new Safe.Search();
+    } else {
+        if ( typeof safe_search_mod !== "undefined" ) {
+            safe_search_mod.destroy();
+        }
+    }
 }
 
 /** makes regexes multiline */
@@ -41,13 +48,14 @@ function ml(reg) {
     }
 }
 
-let safe_search;
+let safe_search_mod;
 if ( Simple.prefs.safeSearch ) {
-    safe_search = new Safe.Search();
+    safe_search_mod = new Safe.Search();
 }
 
 exports.onUnload = function(reason) {
+    mod.destroy();
     if ( Simple.prefs.safeSearch ) {
-        safe_search.stop();
+        safe_search_mod.stop();
     }
 };
