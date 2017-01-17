@@ -1,6 +1,8 @@
-* web-site-filter
+* Score-based Web Filter
 A content filter for websites, emulating dansguardian's score-based filter.
-* Code for Addon at https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/
+* Deployed at
+  - Firefox: https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/, and
+  - Google Chrome: https://chrome.google.com/webstore/detail/score-based-web-filter/ojofglimbmclnbinpbjnhcmkmipplibi/
 * Versions
 ** 0.6.2
 *** Added
@@ -55,3 +57,7 @@ Previous version used innerHTML.
 ** 0.1.0
 *** Added
 Had no message which parts triggered filter if blocked.
+* Uses Icons
+  - filter: https://www.iconfinder.com/icons/383135/filter_icon#size=128
+  - flower: https://www.iconfinder.com/icons/3495/flower_icq_icon#size=128
+  - bomb: https://www.iconfinder.com/icons/1232/bomb_explosive_icon#size=128
