@@ -1,9 +1,17 @@
-* Score-based Web Filter
+* jsGuardian
 A content filter for websites, emulating dansguardian's score-based filter.
 * Deployed at
-  - Firefox: https://addons.mozilla.org/en-US/firefox/addon/web-site-filter/, and
-  - Google Chrome: https://chrome.google.com/webstore/detail/score-based-web-filter/ojofglimbmclnbinpbjnhcmkmipplibi/
+  - Firefox: https://addons.mozilla.org/en-US/firefox/addon/jsguardian/, and
+  - Google Chrome: https://chrome.google.com/webstore/detail/jsguardian/ojofglimbmclnbinpbjnhcmkmipplibi
 * Versions
+** 0.8.0
+*** Changed
+    name (from Score-based web filter) to jsGuardian
+** 0.7.0
+*** Changed
+    webextension (only chromium)
+*** Deleted
+    safe search (use separate safe search addon for this)
 ** 0.6.2
 *** Added
     Lacked toggle to turn safe search on/off
