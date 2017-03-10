@@ -1,9 +1,0 @@
-local/
-.git/
-Makefile
-*~
-*xpi
-.jpmignore
-local
-test
-.gitignore
