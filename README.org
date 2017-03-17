@@ -4,6 +4,9 @@ A content filter for websites, emulating dansguardian's score-based filter.
   - Firefox: https://addons.mozilla.org/en-US/firefox/addon/jsguardian/, and
   - Google Chrome: https://chrome.google.com/webstore/detail/jsguardian/ojofglimbmclnbinpbjnhcmkmipplibi
 * Versions
+** 0.8.1
+*** Fixed
+    zip/xpi lacked icon file
 ** 0.8.0
 *** Changed
     name (from Score-based web filter) to jsGuardian
