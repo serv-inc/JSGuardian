@@ -1,5 +1,13 @@
+"use strict";
 /* jshint esversion: 6, strict: global */
 /* globals chrome */
+/* globals setTimeout */
+// licensed under the MPL 2.0 by (github.com/serv-inc)
+
+/**
+* @fileoverview looks through all received text to find words, adds up
+* score, shows blocking page
+*/
 
 const LIMIT = 160;
 const BLOCKVALS =  [ {
