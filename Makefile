@@ -3,3 +3,4 @@ zip: lint
 
 lint:
 	jshint addon/*.js
+	! grep browser addon/*.js

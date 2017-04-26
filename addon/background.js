@@ -9,6 +9,8 @@
 * score, shows blocking page
 */
 
+const BASIC = 'mozilla.org'; // codup
+let whitelist = RegExp(' '); // updated by code
 const LIMIT = 160;
 const BLOCKVALS =  [ {
         "name": 2,
@@ -63,20 +65,16 @@ const BLOCKVALS =  [ {
         "value": "warning! you must be over 18 to proceed|nsfw #Abbreviation for Not Safe For Work|not safe for work"
     }];
 
-/** @return score of this blockObject on text */
-function do_score(pageText, blockObject, all_matches) {
-    let tmp = pageText.match(RegExp(blockObject.value, "gi"));
-    let matches = new Set();
-    if ( tmp !== null ) {
-        tmp.forEach((el) => {matches.add(el.toLowerCase());});
+
+chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
+    if ( ! whitelist.test(sender.url) ) {
+        scan(pageText, sender);
     }
-    matches.forEach((el) => all_matches.push(el));
-    return matches.size * blockObject.name;
-}
+});
 
 // td: this is non-testable due to i, score, ... above, maybe refactor
 function scan(pageText, sender, score=0, matches=[], i=(BLOCKVALS.length-1)) {
-    score += do_score(pageText, BLOCKVALS[i], matches);
+    score += _do_score(pageText, BLOCKVALS[i], matches);
 
     if ( score > LIMIT ) {
 	chrome.tabs.update(sender.tab.id,
@@ -87,12 +85,26 @@ function scan(pageText, sender, score=0, matches=[], i=(BLOCKVALS.length-1)) {
         setTimeout(function() {
 	    scan(pageText, sender, score, matches, i-1);
 	}, 0);
-    } //else {
-//	console.log("score: " + score);
-//	console.log("matches: " + matches);
-//    }
+    }
 }
 
-chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
-    scan(pageText, sender);
+/** @return score of this blockObject on text */
+function _do_score(pageText, blockObject, all_matches) {
+    let tmp = pageText.match(RegExp(blockObject.value, "gi"));
+    let matches = new Set();
+    if ( tmp !== null ) {
+        tmp.forEach((el) => {matches.add(el.toLowerCase());});
+    }
+    matches.forEach((el) => all_matches.push(el));
+    return matches.size * blockObject.name;
+}
+
+chrome.storage.onChanged.addListener(updateWhitelist);
+function updateWhitelist(changes, area) {
+    if ( changes ? 'whitelist' in changes : false ) {
+        whitelist = RegExp(changes.whitelist.newValue);
+    }
+}
+chrome.storage.local.get("whitelist", function(result) {
+    whitelist = RegExp(result.whitelist || BASIC);
 });
