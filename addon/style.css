@@ -1,0 +1,21 @@
+row {
+    width: 100%;
+}
+
+input {
+    width: 80%;
+}
+
+.centered {
+    display: block;
+    margin-left: auto;
+    margin-right:auto
+}
+
+.cell {
+    display: table-cell;
+}
+
+.row {
+    display: table-row;
+}
