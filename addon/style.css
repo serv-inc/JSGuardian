@@ -2,8 +2,18 @@ row {
     width: 100%;
 }
 
+p {
+    display: flex;
+}
+
+label {
+    padding-right: 8px;
+    display: inline-block;
+}
+
 input {
     width: 80%;
+    flex: 1;
 }
 
 .centered {

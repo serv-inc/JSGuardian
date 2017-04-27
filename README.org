@@ -4,6 +4,9 @@ A content filter for websites, emulating dansguardian's score-based filter.
   - Firefox: https://addons.mozilla.org/en-US/firefox/addon/jsguardian/, and
   - Google Chrome: https://chrome.google.com/webstore/detail/jsguardian/ojofglimbmclnbinpbjnhcmkmipplibi
 * Versions
+** 0.9.1
+*** Added
+    Limit option
 ** 0.9.0
 *** Fixed
     back button overrode block page
