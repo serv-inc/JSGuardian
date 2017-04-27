@@ -9,9 +9,13 @@
 * score, shows blocking page
 */
 
-const BASIC = 'mozilla.org'; // codup
-let whitelist = RegExp(' '); // updated by code
-const LIMIT = 160;
+const DEFAULTS = {
+    "whitelist": 'mozilla.org|dansguardian.org',
+    "limit": 160
+}; // codup options.js
+
+let limit = DEFAULTS.limit;
+let whitelist = RegExp(DEFAULTS.whitelist); // updated by code
 const BLOCKVALS =  [ {
         "name": 2,
         "value": " bra | bras "
@@ -76,7 +80,7 @@ chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
 function scan(pageText, sender, score=0, matches=[], i=(BLOCKVALS.length-1)) {
     score += _do_score(pageText, BLOCKVALS[i], matches);
 
-    if ( score > LIMIT ) {
+    if ( score > limit ) {
 	chrome.tabs.update(sender.tab.id,
 			   {'url': chrome.extension.getURL('popup.html')});
     }
@@ -99,12 +103,16 @@ function _do_score(pageText, blockObject, all_matches) {
     return matches.size * blockObject.name;
 }
 
-chrome.storage.onChanged.addListener(updateWhitelist);
-function updateWhitelist(changes, area) {
+chrome.storage.onChanged.addListener(updateOptions);
+function updateOptions(changes, area) {
     if ( changes ? 'whitelist' in changes : false ) {
         whitelist = RegExp(changes.whitelist.newValue);
     }
+    if ( changes ? 'limit' in changes : false ) {
+        limit = changes.limit.newValue; // semi-codup below
+    }
 }
-chrome.storage.local.get("whitelist", function(result) {
-    whitelist = RegExp(result.whitelist || BASIC);
+chrome.storage.local.get(null, function(result) {
+    limit = result.limit || DEFAULTS.limit;
+    whitelist = RegExp(result.whitelist || DEFAULTS.whitelist);
 });

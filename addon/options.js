@@ -5,26 +5,27 @@
 /* globals document */
 // licensed under the MPL 2.0 by (github.com/serv-inc)
 
-const BASIC = 'mozilla.org|dansguardian.org';
+const DEFAULTS = {
+    "whitelist": 'mozilla.org|dansguardian.org',
+    "limit": 160
+};
 
 function saveOptions(e) {
-  e.preventDefault();
-  chrome.storage.local.set({
-    whitelist: document.querySelector("#whitelist").value
-  });
+    e.preventDefault();
+    chrome.storage.local.set({
+        limit: document.querySelector("#limit").value,
+        whitelist: document.querySelector("#whitelist").value
+    });
 }
 
 function restoreOptions() {
 
-  function setCurrentChoice(result) {
-    document.querySelector("#whitelist").value = result.whitelist || BASIC;
-  }
+    function setCurrentChoice(result) {
+        document.querySelector("#limit").value = result.limit || DEFAULTS.limit;
+        document.querySelector("#whitelist").value = result.whitelist || DEFAULTS.whitelist;
+    }
 
-  function onError(error) {
-    console.log(`Error: ${error}`);
-  }
-
-    chrome.storage.local.get("whitelist", setCurrentChoice);
+    chrome.storage.local.get(null, setCurrentChoice);
 }
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
