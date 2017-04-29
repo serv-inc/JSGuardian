@@ -26,6 +26,10 @@ input {
     display: table-cell;
 }
 
+.noflex {
+    display: block;
+}
+
 .row {
     display: table-row;
 }

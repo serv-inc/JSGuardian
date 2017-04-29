@@ -9,14 +9,12 @@
 * score, shows blocking page
 */
 
-const DEFAULTS = {
-    "whitelist": 'mozilla.org|dansguardian.org',
-    "limit": 160
-}; // codup options.js
-
-let limit = DEFAULTS.limit;
-let whitelist = RegExp(DEFAULTS.whitelist); // updated by code
-const BLOCKVALS =  [ {
+/** @return settings to options page */
+function getSettings() { return settings; }
+let settings = {
+    "limit" : 160,
+    "whitelist" : RegExp("mozilla.org|dansguardian.org"),
+    "blockvals" :  [ {
         "name": 2,
         "value": " bra | bras "
     }, {
@@ -67,20 +65,22 @@ const BLOCKVALS =  [ {
     }, {
         "name": 150,
         "value": "warning! you must be over 18 to proceed|nsfw #Abbreviation for Not Safe For Work|not safe for work"
-    }];
+    }]
+};
 
 
 chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
-    if ( ! whitelist.test(sender.url) ) {
+    if ( ! settings.whitelist.test(sender.url) ) {
         scan(pageText, sender);
     }
 });
 
 // td: this is non-testable due to i, score, ... above, maybe refactor
-function scan(pageText, sender, score=0, matches=[], i=(BLOCKVALS.length-1)) {
-    score += _do_score(pageText, BLOCKVALS[i], matches);
+function scan(pageText, sender, score=0, matches=[],
+              i=(settings.blockvals.length-1)) {
+    score += _do_score(pageText, settings.blockvals[i], matches);
 
-    if ( score > limit ) {
+    if ( score > settings.limit ) {
 	chrome.tabs.update(sender.tab.id,
 			   {'url': chrome.extension.getURL('popup.html')});
     }
@@ -103,16 +103,21 @@ function _do_score(pageText, blockObject, all_matches) {
     return matches.size * blockObject.name;
 }
 
+chrome.storage.local.get(null, function(result) {
+    settings.blockvals = result.blockvals || settings.blockvals;
+    settings.limit = result.limit || settings.limit;
+    settings.whitelist = RegExp(result.whitelist || settings.whitelist);
+});
 chrome.storage.onChanged.addListener(updateOptions);
+// semi-codup
 function updateOptions(changes, area) {
     if ( changes ? 'whitelist' in changes : false ) {
-        whitelist = RegExp(changes.whitelist.newValue);
+        settings.whitelist = RegExp(changes.whitelist.newValue);
     }
     if ( changes ? 'limit' in changes : false ) {
-        limit = changes.limit.newValue; // semi-codup below
+        settings.limit = changes.limit.newValue;
+    }
+    if ( changes ? 'blockvals' in changes : false ) {
+        settings.blockvals = changes.blockvals.newValue;
     }
 }
-chrome.storage.local.get(null, function(result) {
-    limit = result.limit || DEFAULTS.limit;
-    whitelist = RegExp(result.whitelist || DEFAULTS.whitelist);
-});
