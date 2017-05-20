@@ -50,12 +50,9 @@ function _do_score(pageText, blockObject, all_matches) {
 
 /* OPTIONS CODE */
 chrome.storage.local.get(null, function(result) {
-    console.log('storage');
-    console.log(settings);
     settings.blockvals = result.blockvals;
     settings.limit = result.limit;
     settings.whitelist = result.whitelist && RegExp(result.whitelist);
-    console.log(settings);
     if ( ! settings.blockvals || ! settings.limit || ! settings.whitelist ) {
         loadFileSettings();
     }
@@ -74,13 +71,10 @@ function loadFileSettings() {
 }
 
 function loadFromJSON(jsonObj) {
-    console.log('JSON');
-    console.log(settings);
     let parsed = JSON.parse(jsonObj);
     settings.blockvals = settings.blockvals || parsed.blockvals;
     settings.limit = settings.limit || parsed.limit;
-    settings.whitelist = settings.whitelist || parsed.whitelist;
-    console.log(settings);
+    settings.whitelist = settings.whitelist || RegExp(parsed.whitelist);
 }
 
 chrome.storage.onChanged.addListener(updateOptions);
