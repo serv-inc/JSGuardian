@@ -6,9 +6,9 @@
 // licensed under the MPL 2.0 by (github.com/serv-inc)
 
 /**
-* @fileoverview looks through all received text to find words, adds up
-* score, shows blocking page
-*/
+ * @fileoverview looks through all received text to find words, adds up
+ * score, shows blocking page
+ */
 
 /** @return settings to options page */
 function getSettings() { return settings; }
@@ -49,6 +49,16 @@ function _do_score(pageText, blockObject, all_matches) {
 }
 
 /* OPTIONS CODE */
+var Settings = function() {
+    // create data structures/names here
+};
+
+Settings.prototype.init() = function() {
+    // nextaction
+    // load first from managed, then from local storage
+    // remember managed items, so that local updates do not override
+}
+
 chrome.storage.local.get(null, function(result) {
     settings.blockvals = result.blockvals;
     settings.limit = result.limit;
