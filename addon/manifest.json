@@ -1,22 +1,25 @@
 {
-    "manifest_version": 2,
-    "name": "jsGuardian",
-    "version": "0.11.0",
+  "manifest_version": 2,
+  "name": "jsGuardian",
+  "version": "0.12.0",
 
-    "icons": { "128": "filter.png" },
+  "icons": { "128": "filter.png" },
 
-    "permissions": ["tabs", "<all_urls>", "storage"],
+  "permissions": ["tabs", "<all_urls>", "storage"],
 
-    "background": {
-	"scripts": ["background.js"]
-    },
-    "content_scripts": [
-	{
-	    "matches": ["<all_urls>"],
-	    "js": ["get_text_script.js"]
-	}
-    ],
-    "options_ui": {
-        "page": "options.html"
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["get_text_script.js"]
     }
+  ],
+  "options_ui": {
+    "page": "options.html"
+  },
+  "storage": {
+    "managed_schema": "schema.json"
+  }
 }
