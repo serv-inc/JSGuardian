@@ -89,7 +89,7 @@ class Settings {
             if ( ! _self.isManaged(el) ) { // create
               _self._managed.push(el);
             } else { // update or delete
-              if ( ! 'newValue' in changes[el] ) { // got deleted, use as local
+              if ( ! changes[el].hasOwnProperty('newValue') ) { // got deleted, use as local
                 _self._managed.splice(_self._managed.indexOf(el));
               }
             }
