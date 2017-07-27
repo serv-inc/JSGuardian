@@ -10,12 +10,8 @@
  * score, shows blocking page
  */
 
-/** @return settings to options page */
-function getSettings() { return settings; }
-let settings = {};
-
 chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
-    if ( ! settings.whitelist.test(sender.url) ) {
+    if ( ! settings.whitelistRegExp.test(sender.url) ) {
         scan(pageText, sender);
     }
 });
@@ -49,53 +45,132 @@ function _do_score(pageText, blockObject, all_matches) {
 }
 
 /* OPTIONS CODE */
-var Settings = function() {
-    // create data structures/names here
-};
+class Settings {
+  /** initializes from managed, local storage. on first load from preset.json */
+  constructor() {
+    // this will fail if the _vars below are ever used in the real settings
+    let _self = this;
+    this._settings = {};
+    this._managed = [];
+    this._loaded = false;
+    this._initialized = false;
+    chrome.storage.managed.get(null, result => {
+      for (let el in result) {
+        if ( result.hasOwnProperty(el) ) {
+          this._settings[el] = result[el];
+          this._managed.push(el);
+          Object.defineProperty(this, el,
+                                { get: () => { return this._settings[el]; }});
+        }
+      }
+      chrome.storage.local.get(null, result => {
+        for (let el in result) {
+          if ( el === "_initialized" ) {
+            this._initialized = true;
+            continue;
+          }
+          if ( result.hasOwnProperty(el) && ! this.isManaged(el) ) {
+            this._settings[el] = result[el];
+            Object.defineProperty(this, el,
+                                  { get: () => { return this._settings[el]; },
+                                    set: (x) => { this._settings[el] = x; }});
+            // could also trigger a save of that value
+          }
+        }
+        if ( ! this._initialized ) {
+          this._loadFileSettings();
+        } else {
+          this.finish();
+        }
+      });
+    });
+  }
 
-Settings.prototype.init() = function() {
-    // nextaction
-    // load first from managed, then from local storage
-    // remember managed items, so that local updates do not override
-}
 
-chrome.storage.local.get(null, function(result) {
-    settings.blockvals = result.blockvals;
-    settings.limit = result.limit;
-    settings.whitelist = result.whitelist && RegExp(result.whitelist);
-    if ( ! settings.blockvals || ! settings.limit || ! settings.whitelist ) {
-        loadFileSettings();
+  get whitelistRegExp() {
+    return RegExp(this.whitelist);
+  }
+  set whitelistRegExp(newRegExp) {
+    if ( ! this._managed.includes("whitelist") ) {
+      this.whitelist = newRegExp.toString().slice(1, -1);
+    } else {
+      console.err("tried to set managed whitelist property");
     }
-});
+  }
 
-function loadFileSettings() {
+
+  isManaged(el) {
+    return this._managed.includes(el);
+  }
+
+
+  save() {
+    console.error("redo");
+    let out = {};
+    for (let el in this) {
+      if ( realProperty(this, el)
+           && ! this.isManaged(el) ) {
+        out[el] = this[el];
+      }
+    }
+    chrome.storage.local.set(out);
+  }
+
+
+  finish() {
+    this._loaded = true;
+    chrome.storage.onChanged.addListener(this.updateOptions);
+  }
+
+
+  updateOptions(changes, area) {
+    for (let el in changes) {
+      if ( changes.hasOwnProperty(el) ) {
+        if ( area === "managed" ) {
+          if ( ! self.isManaged(el) ) {
+            self._managed.push(el);
+          }
+        } else if ( self.isManaged(el) ) {
+          console.error("updated managed element");
+          continue;
+        }
+        self[el] = changes[el].newValues;
+      }
+    }
+  }
+
+
+  _loadFileSettings() {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
     xobj.open('GET', 'preset.json', true);
-    xobj.onreadystatechange = function() {
-        if (xobj.readyState == 4 && xobj.status == "200") {
-            loadFromJSON(xobj.responseText);
+    xobj.onreadystatechange = () => {
+      if (xobj.readyState == 4 && xobj.status == "200") {
+        let parsed = JSON.parse(xobj.responseText);
+        for (let el in parsed) {
+          if ( parsed.hasOwnProperty(el)
+               && ! this.isManaged(el) ) {
+            this[el] = parsed[el];
+          }
         }
+        chrome.storage.local.set({"_initialized": true});
+        this.finish();
+      }
     };
     xobj.send(null);
-}
+  }
+};
 
-function loadFromJSON(jsonObj) {
-    let parsed = JSON.parse(jsonObj);
-    settings.blockvals = settings.blockvals || parsed.blockvals;
-    settings.limit = settings.limit || parsed.limit;
-    settings.whitelist = settings.whitelist || RegExp(parsed.whitelist);
-}
 
-chrome.storage.onChanged.addListener(updateOptions);
-function updateOptions(changes, area) {
-    if ( changes ? 'whitelist' in changes : false ) {
-        settings.whitelist = RegExp(changes.whitelist.newValue);
-    }
-    if ( changes ? 'limit' in changes : false ) {
-        settings.limit = changes.limit.newValue;
-    }
-    if ( changes ? 'blockvals' in changes : false ) {
-        settings.blockvals = changes.blockvals.newValue;
-    }
+let settings = new Settings();
+/** @return settings to options page */
+function getSettings() { return settings; }
+
+
+/** @return true if property is a real data in object, not accessor */
+function realProperty(object, property) {
+  let descriptor = Object.getOwnPropertyDescriptor(object, property);
+  return (object.hasOwnProperty(property)
+          && Object.getOwnPropertyDescriptor(object, property)
+                   .hasOwnProperty("value"));
 }
