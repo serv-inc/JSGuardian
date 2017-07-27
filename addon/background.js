@@ -1,5 +1,7 @@
 "use strict";
 /* jshint esversion: 6, strict: global */
+/* jshint loopfunc: true */
+/* jshint laxbreak: true */
 /* globals chrome */
 /* globals XMLHttpRequest */
 /* globals setTimeout */
@@ -44,23 +46,21 @@ function _do_score(pageText, blockObject, all_matches) {
     return matches.size * blockObject.name;
 }
 
+
 /* OPTIONS CODE */
 class Settings {
   /** initializes from managed, local storage. on first load from preset.json */
   constructor() {
-    // this will fail if the _vars below are ever used in the real settings
     let _self = this;
     this._settings = {};
     this._managed = [];
-    this._loaded = false;
     this._initialized = false;
-    chrome.storage.managed.get(null, result => {
+    let storagePolyfill = chrome.storage.managed || { get: (a, b) => b({}) };
+    storagePolyfill.get(null, result => {
       for (let el in result) {
         if ( result.hasOwnProperty(el) ) {
-          this._settings[el] = result[el];
           this._managed.push(el);
-          Object.defineProperty(this, el,
-                                { get: () => { return this._settings[el]; }});
+          this._addToSettings(el, result[el]);
         }
       }
       chrome.storage.local.get(null, result => {
@@ -70,19 +70,40 @@ class Settings {
             continue;
           }
           if ( result.hasOwnProperty(el) && ! this.isManaged(el) ) {
-            this._settings[el] = result[el];
-            Object.defineProperty(this, el,
-                                  { get: () => { return this._settings[el]; },
-                                    set: (x) => { this._settings[el] = x; }});
-            // could also trigger a save of that value
+            this._addToSettings(el, result[el]);
           }
         }
         if ( ! this._initialized ) {
           this._loadFileSettings();
         } else {
-          this.finish();
+          this.finish(_self);
         }
       });
+    });
+    // todo: if a managed option becomes unmanaged, this breaks as it
+    // does not have a setter (and overwrites the previous)
+    chrome.storage.onChanged.addListener((changes, area) => {
+      for (let el in changes) {
+        if ( changes.hasOwnProperty(el) ) {
+          if ( area === "managed" ) {
+            if ( ! _self.isManaged(el) ) { // create
+              _self._managed.push(el);
+            } else { // update or delete
+              if ( ! 'newValue' in changes[el] ) { // got deleted, use as local
+                _self._managed.splice(_self._managed.indexOf(el));
+              }
+            }
+          }
+          // should not happen: no setter
+          // else { // other area
+          //   if ( _self.isManaged(el) ) { // create
+          //     console.error("updated managed element");
+          //     continue;
+          //   }
+          // }
+          _self._addToSettings(el, changes[el].newValue);
+        }
+      }
     });
   }
 
@@ -90,12 +111,31 @@ class Settings {
   get whitelistRegExp() {
     return RegExp(this.whitelist);
   }
-  set whitelistRegExp(newRegExp) {
-    if ( ! this._managed.includes("whitelist") ) {
-      this.whitelist = newRegExp.toString().slice(1, -1);
+
+
+  _addToSettings(el, val) {
+    this._settings[el] = val;
+    this._addGetSet(el, !this.isManaged(el));
+  }
+
+
+  // could also trigger a save of that value via set
+  _addGetSet(el, setter=false) {
+    if ( setter ) {
+      Object.defineProperty(this, el,
+                            { get: () => { return this._settings[el]; },
+                              set: (x) => { this._settings[el] = x; },
+                              configurable: true });
     } else {
-      console.err("tried to set managed whitelist property");
+      Object.defineProperty(this, el,
+                            { get: () => { return this._settings[el]; },
+                              configurable: true });
     }
+  }
+
+
+  finish(self) {
+    self.save(self);
   }
 
 
@@ -104,39 +144,14 @@ class Settings {
   }
 
 
-  save() {
-    console.error("redo");
-    let out = {};
-    for (let el in this) {
-      if ( realProperty(this, el)
-           && ! this.isManaged(el) ) {
-        out[el] = this[el];
+  save(settingsobj) {
+    let out = {"_initialized": true};
+    for (let el in settingsobj._settings) {
+      if ( ! settingsobj.isManaged(el) ) {
+        out[el] = settingsobj._settings[el];
       }
     }
     chrome.storage.local.set(out);
-  }
-
-
-  finish() {
-    this._loaded = true;
-    chrome.storage.onChanged.addListener(this.updateOptions);
-  }
-
-
-  updateOptions(changes, area) {
-    for (let el in changes) {
-      if ( changes.hasOwnProperty(el) ) {
-        if ( area === "managed" ) {
-          if ( ! self.isManaged(el) ) {
-            self._managed.push(el);
-          }
-        } else if ( self.isManaged(el) ) {
-          console.error("updated managed element");
-          continue;
-        }
-        self[el] = changes[el].newValues;
-      }
-    }
   }
 
 
@@ -150,27 +165,17 @@ class Settings {
         for (let el in parsed) {
           if ( parsed.hasOwnProperty(el)
                && ! this.isManaged(el) ) {
-            this[el] = parsed[el];
+            this._addToSettings(el, parsed[el]);
           }
         }
-        chrome.storage.local.set({"_initialized": true});
-        this.finish();
+        this.finish(this);
       }
     };
     xobj.send(null);
   }
-};
+}
 
 
 let settings = new Settings();
 /** @return settings to options page */
 function getSettings() { return settings; }
-
-
-/** @return true if property is a real data in object, not accessor */
-function realProperty(object, property) {
-  let descriptor = Object.getOwnPropertyDescriptor(object, property);
-  return (object.hasOwnProperty(property)
-          && Object.getOwnPropertyDescriptor(object, property)
-                   .hasOwnProperty("value"));
-}
