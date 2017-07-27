@@ -3,6 +3,7 @@
 /* globals chrome */
 /* globals console */
 /* globals document */
+/* globals window */
 // licensed under the MPL 2.0 by (github.com/serv-inc)
 let initError = false;
 
@@ -13,6 +14,7 @@ function saveOptions(e) {
     return;
   }
   let settings = chrome.extension.getBackgroundPage().getSettings();
+  // later: dynamic loading of elements
   // for (let el in settings) {
   //   if ( settings.hasOwnProperty(el) ) {
   // check if is real property: Object.getOwnPropertyDescriptor(settings, el)
@@ -29,14 +31,17 @@ function saveOptions(e) {
     settings.whitelist = document.querySelector("#whitelist").value;
   }
   if ( ! settings.isManaged("blockvals") ) {
+    let blockvals = [];
     [2,3,5,10,20,25,30,40,50,60,70,80,90,100,120,130,150].forEach(function(id){
-      settings.blockvals.push({
+      blockvals.push({
         name: id,
         value: document.querySelector("#p" + id).value
       });
     });
+    settings.blockvals = blockvals;
   }
-  settings.save();
+  settings.save(settings); // todo: remove param possible?
+  window.close();
 }
 
 
@@ -49,21 +54,21 @@ function restoreOptions() {
   initError = false;
   let settings = chrome.extension.getBackgroundPage().getSettings();
   document.querySelector("#limit").value = settings.limit;
-  disableIfManaged(settings, "limit");
+  _disableIfManaged(settings, "limit");
   document.querySelector("#whitelist").value = settings.whitelist;
-  disableIfManaged(settings, "whitelist");
+  _disableIfManaged(settings, "whitelist");
   settings.blockvals.forEach(function(el) {
     document.querySelector("#p" + el.name).value = el.value;
-    disableIfManaged(settings, "blockvals", "p" + el.name);
+    _disableIfManaged(settings, "blockvals", "p" + el.name);
   });
 }
 
 
 /** sets element to readonly if in managedStorage */
-function disableIfManaged(settings, element, place=null) {
+function _disableIfManaged(settings, element, place=null) {
   place = place || element;
   if ( settings.isManaged(element) ) {
-    document.querySelector("#" + place).readOnly = true;
+    document.querySelector("#" + place).disabled = true; // readOnly
   }
 }
 
