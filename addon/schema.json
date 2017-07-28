@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "limit": {
+      "description": "maximum score for which to allow page",
+      "type": "integer"
+    },
+    "blockvals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "integer" },
+          "value": { "type": "string" }
+        }
+      }
+    },
+    "whitelist": {
+      "description": "regex string to whitelist sites",
+      "type": "string"
+    }
+  }
+}
