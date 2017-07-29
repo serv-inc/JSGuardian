@@ -1,0 +1,31 @@
+input {
+    width: 80%;
+    flex: 1;
+}
+
+label {
+    padding-right: 8px;
+    display: inline-block;
+}
+
+p {
+    display: flex;
+}
+
+row {
+    width: 100%;
+}
+
+.centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cell {
+    display: table-cell;
+}
+
+.row {
+    display: table-row;
+}
