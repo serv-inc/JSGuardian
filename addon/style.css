@@ -1,35 +1,59 @@
-row {
-    width: 100%;
-}
-
-p {
-    display: flex;
-}
-
-label {
-    padding-right: 8px;
-    display: inline-block;
-}
-
-input {
-    width: 80%;
-    flex: 1;
-}
-
 .centered {
     display: block;
     margin-left: auto;
-    margin-right:auto
+    margin-right: auto;
 }
 
-.cell {
-    display: table-cell;
+
+a {
+    color: blue;
+    cursor: pointer;
 }
 
-.noflex {
-    display: block;
+
+h1 {
+    width: 7em;
+    font-size: 48px;
 }
 
-.row {
-    display: table-row;
+h1.centered {
+    display: flex;
+}
+
+
+h2 {
+    font-weight: 300;
+    width: fit-content;
+}
+
+
+img {
+    height: 72px;
+}
+
+
+.topright {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.topleft {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.topleft {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.bottomleft {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+}
+.bottomright {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
 }
