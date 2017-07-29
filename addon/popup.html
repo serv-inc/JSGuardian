@@ -5,11 +5,22 @@
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
-    <img class="centered" src="./filter.png"/>
-    <div class="centered">
-      <p class="noflex">The page you were looking for was blocked by
-      the <em>jsGuardian</em> extension. </em> It is possible to allow this
-      domain in the whitelist.</p>
-    </div>
+    <h1 class="centered">
+      <img style="display: ;" src="./filter.png"/>
+      <span style="vertical-align: 30%;">jsGuardian</span>
+    </h1>
+    <h2>
+      The page you were looking for has been blocked by <em>jsGuardian</em>.
+    </h2>
+    <p>
+      It could be possible to
+      allow this domain in <a id="setbyscript">the settings</a> (see
+      <em>whitelist</em>).
+    </p>
+    <script src="popup.js"></script>
+    <img class="topright" src="icq.png"/>
+    <img class="topleft" src="icq.png"/>
+    <img class="bottomright" src="icq.png"/>
+    <img class="bottomleft" src="icq.png"/>
   </body>
 </html>
