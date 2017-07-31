@@ -32,28 +32,14 @@ img {
 }
 
 
-.topright {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-}
-.topleft {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-.topleft {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-.bottomleft {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-}
-.bottomright {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
+body {
+    background-image: url("icq.png"), url("icq.png"), url("icq.png"), url("icq.png");
+
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+
+    background-position: top right, top left, bottom right, bottom left;
+
+    height: 100%;
+    min-height: 300px;
+    
 }

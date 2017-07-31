@@ -4,6 +4,11 @@ A content filter for websites, emulating dansguardian's score-based filter.
   - Firefox: https://addons.mozilla.org/en-US/firefox/addon/jsguardian/, and
   - Google Chrome: https://chrome.google.com/webstore/detail/jsguardian/ojofglimbmclnbinpbjnhcmkmipplibi
 * Versions
+** 0.13.1
+*** Fixed
+    - popup.html seems to be blocked on Windows 10.
+    - Had layout in HTML.
+    - HTML was invalid
 ** 0.13.0
 *** Added
     Popup lacked link to options.
