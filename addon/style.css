@@ -14,12 +14,12 @@ a {
 h1 {
     width: 7em;
     font-size: 48px;
+    vertical-align: 30%;
 }
 
 h1.centered {
     display: flex;
 }
-
 
 h2 {
     font-weight: 300;
@@ -27,13 +27,8 @@ h2 {
 }
 
 
-img {
-    height: 72px;
-}
-
-
 body {
-    background-image: url("icq.png"), url("icq.png"), url("icq.png"), url("icq.png");
+    background-image: url("filter.png"), url("filter.png"), url("filter.png"), url("filter.png");
 
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
 
