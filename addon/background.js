@@ -25,7 +25,7 @@ function scan(pageText, sender, score=0, matches=[],
 
     if ( score > settings.limit ) {
 	chrome.tabs.update(sender.tab.id,
-			   {'url': chrome.extension.getURL('popup.html')});
+			   {'url': chrome.extension.getURL('blockpage.html')});
     }
 
     if ( i > 0 ) {
