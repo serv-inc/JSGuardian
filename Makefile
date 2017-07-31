@@ -7,4 +7,6 @@ lint:
 	python -m json.tool addon/manifest.json > /dev/null
 	python -m json.tool addon/preset.json > /dev/null
 	python -m json.tool addon/schema.json > /dev/null
+	html-validator --file=addon/options.html # uses the npm package
+	html-validator --file=addon/blockpage.html
 
