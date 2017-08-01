@@ -1,10 +1,4 @@
-.centered {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-
+/** link color */
 a {
     color: blue;
     cursor: pointer;
@@ -12,21 +6,20 @@ a {
 
 
 h1 {
-    width: 7em;
-    font-size: 48px;
-    vertical-align: 30%;
+    font-size: 32px;
+}
+@media screen and (min-width: 400px) {
+    h1 {
+        font-size: 48px;
+    }
 }
 
-h1.centered {
-    display: flex;
-}
 
 h2 {
     font-weight: 300;
-    width: fit-content;
 }
 
 
 img {
-    width: 72px;
+    height: 72px;
 }
