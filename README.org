@@ -1,9 +1,13 @@
-* jsGuardian
-A content filter for websites, emulating dansguardian's score-based filter.
+* JSGuardian
+A content filter for websites, emulating dansguardian's score-based filter in JavaScript.
 * Deployed at
   - Firefox: https://addons.mozilla.org/en-US/firefox/addon/jsguardian/, and
   - Google Chrome: https://chrome.google.com/webstore/detail/jsguardian/ojofglimbmclnbinpbjnhcmkmipplibi
 * Versions
+** 0.13.2
+*** Fixed
+    - logo needs to be IMG
+    - capitalization like JSDoc
 ** 0.13.1
 *** Fixed
     - popup.html seems to be blocked on Windows 10.
