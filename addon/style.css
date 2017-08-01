@@ -27,14 +27,6 @@ h2 {
 }
 
 
-body {
-    background-image: url("filter.png"), url("filter.png"), url("filter.png"), url("filter.png");
-
-    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
-
-    background-position: top right, top left, bottom right, bottom left;
-
-    height: 100%;
-    min-height: 300px;
-    
+img {
+    width: 72px;
 }
