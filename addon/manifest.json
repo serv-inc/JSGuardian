@@ -1,7 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "jsGuardian",
-  "version": "0.13.1",
+  "name": "JSGuardian: Filter Within Your Browser",
+  "short_name": "JSGuardian",
+  "version": "0.13.2",
+  "author": "serv-inc",
+  "homepage_url": "https://github.com/serv-inc/JSGuardian",
 
   "icons": { "128": "filter.png" },
 
