@@ -80,8 +80,7 @@ class Settings {
         }
       });
     });
-    // todo: if a managed option becomes unmanaged, this breaks as it
-    // does not have a setter (and overwrites the previous)
+    // if a managed option becomes unmanaged, use the managed setting as local
     chrome.storage.onChanged.addListener((changes, area) => {
       for (let el in changes) {
         if ( changes.hasOwnProperty(el) ) {

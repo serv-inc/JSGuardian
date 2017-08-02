@@ -29,3 +29,7 @@ row {
 .row {
     display: table-row;
 }
+
+.options {
+    width: 100%;
+}
