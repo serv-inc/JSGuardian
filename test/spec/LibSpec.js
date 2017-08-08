@@ -12,9 +12,27 @@ describe("JSGuardian", function() {
   describe("Settings Object", function() {
     it("should yield the managed objects variable", function(done) {
       let a = new Settings();
-      doneIfDone(a, done, () => {
+      ifLoaded(a, () => {
         expect(a.limit).toBe(160);
         expect(a.isManaged("limit")).toBe(true);
+        done();
+      });
+    });
+
+    it("should save an unmanaged variable", function(done) {
+      let a = new Settings();
+      ifLoaded(a, () => {
+        // trick to set a new variable: assign to _settings
+        a._settings.something = 1234;
+        a.save(a);
+        console.log(JSON.stringify(a));
+        let b = new Settings();
+        ifSaved(a, () => {
+          console.log(JSON.stringify(b));
+          expect(b.something).toBe(1234);
+          expect(b.isManaged("something")).toBe(false);
+          done();
+        });
       });
     });
   });
@@ -26,13 +44,20 @@ describe("JSGuardian", function() {
        b. or not managed for other item
     */
 
-function doneIfDone(settings, done, checkCallback) {
+function ifLoaded(settings, callback) {
   if ( settings._loaded ) {
-    checkCallback();
-    done();
+    callback();
   } else {
     console.log("ping");
-    setTimeout(doneIfDone, 100, settings, done, checkCallback);
+    setTimeout(ifLoaded, 100, settings, callback);
+  }
+}
+function ifSaved(settings, callback) {
+  if ( settings._saved ) {
+    callback();
+  } else {
+    console.log("pong");
+    setTimeout(ifLoaded, 100, settings, callback);
   }
 }
 
