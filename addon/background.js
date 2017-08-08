@@ -95,13 +95,6 @@ class Settings {
               }
             }
           }
-          // should not happen: no setter
-          // else { // other area
-          //   if ( _self.isManaged(el) ) { // create
-          //     console.error("updated managed element");
-          //     continue;
-          //   }
-          // }
           _self._addToSettings(el, changes[el].newValue);
         }
       }
@@ -157,7 +150,7 @@ class Settings {
       }
     }
     chrome.storage.local.set(out);
-    self._saved = true;
+    this._saved = true;
   }
 
 
