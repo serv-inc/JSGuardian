@@ -50,14 +50,13 @@ function _do_score(pageText, blockObject, all_matches) {
 /* OPTIONS CODE */
 class Settings {
   /** initializes from managed, local storage. on first load from preset.json */
-  constructor(alternateStorage=null) {
+  constructor() {
     let _self = this;
     this._settings = {};
     this._managed = [];
     this._initialized = false;
-    let storagePolyfill = ( alternateStorage
-                            || chrome.storage.managed
-                            || { get: (a, b) => b({}) } );
+    this._loaded = false;
+    let storagePolyfill = chrome.storage.managed || { get: (a, b) => b({}) };
     storagePolyfill.get(null, result => {
       for (let el in result) {
         if ( result.hasOwnProperty(el) ) {
@@ -136,6 +135,7 @@ class Settings {
 
 
   finish(self) {
+    self._loaded = true;
     self.save(self);
   }
 
