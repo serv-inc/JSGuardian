@@ -56,6 +56,7 @@ class Settings {
     this._managed = [];
     this._initialized = false;
     this._loaded = false;
+    this._saved = true;
     let storagePolyfill = chrome.storage.managed || { get: (a, b) => b({}) };
     storagePolyfill.get(null, result => {
       for (let el in result) {
@@ -124,7 +125,10 @@ class Settings {
     if ( setter ) {
       Object.defineProperty(this, el,
                             { get: () => { return this._settings[el]; },
-                              set: (x) => { this._settings[el] = x; },
+                              set: (x) => {
+                                this._settings[el] = x;
+                                this._saved = false;
+                              },
                               configurable: true });
     } else {
       Object.defineProperty(this, el,
@@ -153,6 +157,7 @@ class Settings {
       }
     }
     chrome.storage.local.set(out);
+    self._saved = true;
   }
 
 
