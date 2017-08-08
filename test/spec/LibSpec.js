@@ -24,7 +24,7 @@ describe("JSGuardian", function() {
       ifLoaded(a, () => {
         // trick to set a new variable: assign to _settings
         a._settings.something = 1234;
-        a.save(a);
+        a.save();
         console.log(JSON.stringify(a));
         let b = new Settings();
         ifSaved(a, () => {
@@ -37,12 +37,6 @@ describe("JSGuardian", function() {
     });
   });
 });
-    /*
-       1. create settings object using my chrome
-       2. check that value is contained
-       3. and that managed
-       b. or not managed for other item
-    */
 
 function ifLoaded(settings, callback) {
   if ( settings._loaded ) {

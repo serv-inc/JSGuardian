@@ -140,7 +140,7 @@ class Settings {
 
   finish(self) {
     self._loaded = true;
-    self.save(self);
+    self.save();
   }
 
 
@@ -149,11 +149,11 @@ class Settings {
   }
 
 
-  save(settingsobj) {
+  save() {
     let out = {"_initialized": true};
-    for (let el in settingsobj._settings) {
-      if ( ! settingsobj.isManaged(el) ) {
-        out[el] = settingsobj._settings[el];
+    for (let el in this._settings) {
+      if ( ! this.isManaged(el) ) {
+        out[el] = this._settings[el];
       }
     }
     chrome.storage.local.set(out);
