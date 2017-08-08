@@ -4,6 +4,11 @@ A content filter for websites, emulating dansguardian's score-based filter in Ja
   - Firefox: https://addons.mozilla.org/en-US/firefox/addon/jsguardian/, and
   - Google Chrome: https://chrome.google.com/webstore/detail/jsguardian/ojofglimbmclnbinpbjnhcmkmipplibi
 * Versions
+** 0.13.3
+*** Lacked 
+    - tests
+*** Was
+    - less refactored
 ** 0.13.2
 *** Fixed
     - logo needs to be IMG
