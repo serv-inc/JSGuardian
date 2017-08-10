@@ -1,4 +1,4 @@
-* JSGuardian
+* JSGuardian: Filter Within Your Browser
 A content filter for websites, emulating dansguardian's score-based filter in JavaScript.
 
 [[https://addons.mozilla.org/de/firefox/addon/jsguardian/][https://img.shields.io/amo/v/jsguardian.svg]]
