@@ -4,8 +4,13 @@ A content filter for websites, emulating dansguardian's score-based filter in Ja
 [[https://addons.mozilla.org/de/firefox/addon/jsguardian/][https://img.shields.io/amo/v/jsguardian.svg]]
 [[https://chrome.google.com/webstore/detail/jsguardian/ojofglimbmclnbinpbjnhcmkmipplibi][https://img.shields.io/chrome-web-store/v/ojofglimbmclnbinpbjnhcmkmipplibi.svg]]
 * Versions
+** 0.13.4
+*** Lacked
+    - test for preset file loading
+*** Was
+    - less refactored
 ** 0.13.3
-*** Lacked 
+*** Lacked
     - tests
 *** Was
     - less refactored
