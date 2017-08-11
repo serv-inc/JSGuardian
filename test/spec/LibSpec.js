@@ -9,7 +9,9 @@ describe("Mock Extension", function() {
 });
 
 describe("JSGuardian", function() {
+
   describe("Settings Object", function() {
+
     it("should yield the managed objects variable", function(done) {
       let a = new Settings();
       ifLoaded(a, () => {
@@ -19,22 +21,39 @@ describe("JSGuardian", function() {
       });
     });
 
-    it("should save an unmanaged variable", function(done) {
+
+    it("should save an unmanaged variable to local storage", function(done) {
       let a = new Settings();
       ifLoaded(a, () => {
         // trick to set a new variable: assign to _settings
         a._settings.something = 1234;
         a.save();
-        console.log(JSON.stringify(a));
+        expect(a._loaded).toBe(true);
         let b = new Settings();
         ifSaved(a, () => {
-          console.log(JSON.stringify(b));
           expect(b.something).toBe(1234);
           expect(b.isManaged("something")).toBe(false);
           done();
         });
       });
     });
+
+
+    it("should get from preset.json", function() {
+      let tmp = chrome._store;
+      chrome._store = chrome._store_man;
+      jasmine.Ajax.withMock(function() {
+        let a = new Settings();
+        expect(jasmine.Ajax.requests.mostRecent().url).toBe("preset.json");
+        jasmine.Ajax.requests.mostRecent().respondWith({
+          "status": 200,
+          "responseText": '{"whitelist" : "mozilla.org|dansguardian.org"}'
+        });
+        expect(a.whitelist).toBe("mozilla.org|dansguardian.org");
+        expect(a._loaded).toBe(true);
+      });
+    });
+
   });
 });
 
@@ -42,7 +61,6 @@ function ifLoaded(settings, callback) {
   if ( settings._loaded ) {
     callback();
   } else {
-    console.log("ping");
     setTimeout(ifLoaded, 100, settings, callback);
   }
 }
