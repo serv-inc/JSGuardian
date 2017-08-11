@@ -78,7 +78,7 @@ class Settings {
         if ( ! this._initialized ) {
           this._loadFileSettings();
         } else {
-          this.finish(_self);
+          this.finish();
         }
       });
     });
@@ -131,9 +131,9 @@ class Settings {
   }
 
 
-  finish(self) {
-    self._loaded = true;
-    self.save();
+  finish() {
+    this._loaded = true;
+    this.save();
   }
 
 
@@ -167,7 +167,7 @@ class Settings {
             this._addToSettings(el, parsed[el]);
           }
         }
-        this.finish(this);
+        this.finish();
       }
     };
     xobj.send(null);
