@@ -1,10 +1,13 @@
 {
   "manifest_version": 2,
+
   "name": "JSGuardian: Filter Within Your Browser",
+  "version": "1.0.1",
+
   "short_name": "JSGuardian",
-  "version": "1.0.0",
   "author": "serv-inc",
   "homepage_url": "https://github.com/serv-inc/JSGuardian",
+  "applications": { "gecko": { "id": "@wsf" } }
 
   "icons": { "128": "filter.png" },
 

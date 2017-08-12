@@ -18,16 +18,12 @@ class BlockCache {
   }
 
   add(url) {
-    console.log("add: " + this._cache);
     if ( this.allow(url) ) {
       this._cache.push(url);
     }
   }
 
   allow(url) {
-    console.log("allow: " + this._cache);
-    var tmpout = ! this._cache.includes(url);
-    console.log(tmpout);
     return ! this._cache.includes(url);
   }
 }
@@ -53,7 +49,7 @@ function scan(pageText, sender, score=0, matches=[],
               i=(settings.blockvals.length-1)) {
   score += _do_score(pageText, settings.blockvals[i], matches);
 
-  if ( i == 0 && score > settings.limit ) {
+  if ( i === 0 && score > settings.limit ) {
     blockCache.add(sender.url);
     setBlockPage(sender);
   }
