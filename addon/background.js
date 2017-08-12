@@ -12,38 +12,68 @@
  * score, shows blocking page
  */
 
-chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
-    if ( ! settings.whitelistRegExp.test(sender.url) ) {
-        scan(pageText, sender);
+class BlockCache {
+  constructor() {
+    this._cache = [];
+  }
+
+  add(url) {
+    console.log("add: " + this._cache);
+    if ( this.allow(url) ) {
+      this._cache.push(url);
     }
+  }
+
+  allow(url) {
+    console.log("allow: " + this._cache);
+    var tmpout = ! this._cache.includes(url);
+    console.log(tmpout);
+    return ! this._cache.includes(url);
+  }
+}
+let blockCache = new BlockCache();
+
+chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
+  if ( ! settings.whitelistRegExp.test(sender.url) ) {
+    if ( blockCache.allow(sender.url) ) {
+      scan(pageText, sender);
+    } else {
+      setBlockPage(sender);
+    }
+  }
 });
+
+function setBlockPage(sender) {
+  chrome.tabs.update(sender.tab.id,
+		     {'url': chrome.extension.getURL('blockpage.html')});
+}
 
 // td: this is non-testable due to i, score, ... above, maybe refactor
 function scan(pageText, sender, score=0, matches=[],
               i=(settings.blockvals.length-1)) {
-    score += _do_score(pageText, settings.blockvals[i], matches);
+  score += _do_score(pageText, settings.blockvals[i], matches);
 
-    if ( score > settings.limit ) {
-	chrome.tabs.update(sender.tab.id,
-			   {'url': chrome.extension.getURL('blockpage.html')});
-    }
+  if ( i == 0 && score > settings.limit ) {
+    blockCache.add(sender.url);
+    setBlockPage(sender);
+  }
 
-    if ( i > 0 ) {
-        setTimeout(function() {
-	    scan(pageText, sender, score, matches, i-1);
-	}, 0);
-    }
+  if ( i > 0 ) {
+    setTimeout(function() {
+      scan(pageText, sender, score, matches, i-1);
+    }, 0);
+  }
 }
 
 /** @return score of this blockObject on text */
 function _do_score(pageText, blockObject, all_matches) {
-    let tmp = pageText.match(RegExp(blockObject.value, "gi"));
-    let matches = new Set();
-    if ( tmp !== null ) {
-        tmp.forEach((el) => {matches.add(el.toLowerCase());});
-    }
-    matches.forEach((el) => all_matches.push(el));
-    return matches.size * blockObject.name;
+  let tmp = pageText.match(RegExp(blockObject.value, "gi"));
+  let matches = new Set();
+  if ( tmp !== null ) {
+    tmp.forEach((el) => {matches.add(el.toLowerCase());});
+  }
+  matches.forEach((el) => all_matches.push(el));
+  return matches.size * blockObject.name;
 }
 
 

@@ -1,11 +1,13 @@
 "use strict";
 describe("Mock Extension", function() {
+
   it("should have a get that calls a callback", function(done) {
     chrome.storage.managed.get(null, (result) => {
       expect(result.limit).toBe(160);
       done();
     });
   });
+
 });
 
 describe("JSGuardian", function() {
@@ -55,6 +57,23 @@ describe("JSGuardian", function() {
     });
 
   });
+
+  describe("BlockCache", function() {
+
+    beforeEach(function() {
+      this.blockCache = new BlockCache();
+    });
+
+    it("should recognize added urls", function() {
+      this.blockCache.add("http://some.url");
+      expect(this.blockCache.allow("http://some.url")).toBe(false);
+    });
+
+    it("should allow clear non-added urls", function() {
+      expect(this.blockCache.allow("http://other.url")).toBe(true);
+    });
+  });
+
 });
 
 function ifLoaded(settings, callback) {
