@@ -7,7 +7,7 @@
   "short_name": "JSGuardian",
   "author": "serv-inc",
   "homepage_url": "https://github.com/serv-inc/JSGuardian",
-  "applications": { "gecko": { "id": "@wsf" } }
+  "applications": { "gecko": { "id": "@wsf" } },
 
   "icons": { "128": "filter.png" },
 
