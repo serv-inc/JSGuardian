@@ -13,24 +13,14 @@ function saveOptions(e) {
     console.error("did not save erroneous options");
     return;
   }
-  let settings = chrome.extension.getBackgroundPage().getSettings();
-  // later: dynamic loading of elements
-  // for (let el in settings) {
-  //   if ( settings.hasOwnProperty(el) ) {
-  // check if is real property: Object.getOwnPropertyDescriptor(settings, el)
-  //    if has '.value': real
-  //    else: accessor
-  // todo: check textfield readonly: managed, no further action
-  //     this[el] = parsed[el];
-  //   }
-  // }
-  if ( ! settings.isManaged("limit") ) {
-    settings.limit = document.querySelector("#limit").value;
+  let $set = chrome.extension.getBackgroundPage().getSettings();
+  if ( ! $set.isManaged("limit") ) {
+    $set.limit = document.querySelector("#limit").value;
   }
-  if ( ! settings.isManaged("whitelist") ) {
-    settings.whitelist = document.querySelector("#whitelist").value;
+  if ( ! $set.isManaged("whitelist") ) {
+    $set.whitelist = document.querySelector("#whitelist").value;
   }
-  if ( ! settings.isManaged("blockvals") ) {
+  if ( ! $set.isManaged("blockvals") ) {
     let blockvals = [];
     [2,3,5,10,20,25,30,40,50,60,70,80,90,100,120,130,150].forEach(function(id){
       blockvals.push({
@@ -38,9 +28,9 @@ function saveOptions(e) {
         value: document.querySelector("#p" + id).value
       });
     });
-    settings.blockvals = blockvals;
+    $set.blockvals = blockvals;
   }
-  settings.save(settings); // todo: remove param possible?
+  $set.save();
   window.close();
 }
 
@@ -52,22 +42,22 @@ function restoreOptions() {
     return;
   }
   initError = false;
-  let settings = chrome.extension.getBackgroundPage().getSettings();
-  document.querySelector("#limit").value = settings.limit;
-  _disableIfManaged(settings, "limit");
-  document.querySelector("#whitelist").value = settings.whitelist;
-  _disableIfManaged(settings, "whitelist");
-  settings.blockvals.forEach(function(el) {
+  let $set = chrome.extension.getBackgroundPage().getSettings();
+  document.querySelector("#limit").value = $set.limit;
+  _disableIfManaged($set, "limit");
+  document.querySelector("#whitelist").value = $set.whitelist;
+  _disableIfManaged($set, "whitelist");
+  $set.blockvals.forEach(function(el) {
     document.querySelector("#p" + el.name).value = el.value;
-    _disableIfManaged(settings, "blockvals", "p" + el.name);
+    _disableIfManaged($set, "blockvals", "p" + el.name);
   });
 }
 
 
 /** sets element to readonly if in managedStorage */
-function _disableIfManaged(settings, element, place=null) {
+function _disableIfManaged($set, element, place=null) {
   place = place || element;
-  if ( settings.isManaged(element) ) {
+  if ( $set.isManaged(element) ) {
     document.querySelector("#" + place).disabled = true; // readOnly
   }
 }
