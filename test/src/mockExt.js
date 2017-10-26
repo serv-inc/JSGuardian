@@ -2,6 +2,8 @@
 chrome = {
   _store: {"limit" : 160, _initialized: true},
   _store_man: {"limit" : 160},
+  _store_updated: {"limit" : 0},
+  _listeners: [],
   runtime: {
     onMessage : {
       addListener : function() {}
@@ -23,7 +25,13 @@ chrome = {
       get: (a, callback) => callback(chrome._store_man)
     },
     onChanged: {
-      addListener: () => {}
+      addListener: (listener) => chrome._listeners.push(listener)
     }
+  },
+  _triggerChange(changeSet={"limit": {"newValue": 0, "oldValue": 160}},
+                 area="managed") {
+    chrome._listeners.forEach((listener) => {
+      listener(changeSet, area);
+    });
   }
 };
