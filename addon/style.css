@@ -24,3 +24,14 @@ h2 {
 img {
     height: 72px;
 }
+
+.giveback {
+    font-size: 14px;
+    font-style: italic;
+    color: #777;
+}
+
+.giveback a {
+    color: #777;
+    text-decoration: underline;
+}
