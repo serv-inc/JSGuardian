@@ -35,14 +35,19 @@ chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
     if ( blockCache.allow(sender.url) ) {
       scan(pageText, sender);
     } else {
-      setBlockPage(sender);
+      setBlockPage(sender, ['cached site']);
     }
   }
 });
 
-function setBlockPage(sender) {
-  chrome.tabs.update(sender.tab.id,
-		     {'url': chrome.extension.getURL('blockpage.html')});
+function setBlockPage(sender, phraseArray=['']) {
+  chrome.tabs.update(
+    sender.tab.id,
+    {'url':
+     chrome.extension.getURL('blockpage.html')
+     + '?' + encodeURIComponent(sender.tab.url)
+     + '&' + JSON.stringify(phraseArray)
+    });
 }
 
 // td: this is non-testable due to i, score, ... above, maybe refactor
@@ -52,7 +57,7 @@ function scan(pageText, sender, score=0, matches=[],
 
   if ( i === 0 && score > getSettings().limit ) {
     blockCache.add(sender.url);
-    setBlockPage(sender);
+    setBlockPage(sender, matches);
   }
 
   if ( i > 0 ) {

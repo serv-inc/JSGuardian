@@ -9,13 +9,28 @@
     <h1>JSGuardian</h1>
     <h2>Filter Within Your Browser</h2>
     <h3>
-      The page you were looking for has been blocked by <em>JSGuardian</em>.
+      The page <span id="page">you were looking for</span> has been blocked by <em>Web Content Filter</em>.
     </h3>
     <p>
       It could be possible to
-      allow this domain in <a id="setbyscript">the settings</a> (see
+      allow this domain in <a id="showOptions">the settings</a> (see
       <em>whitelist</em>).
     </p>
+    <details>
+      <summary>sensitive phrases</summary>
+      <p id="phrases"/>
+    </details>
+
+    <p class="giveback">
+      If this web content filter has improved your life, you could
+      support its continued development by
+      <a href="https://www.patreon.com/user?u=8253776">making a
+contribution</a>
+      or <a id="review" href="https://addons.mozilla.org/en-US/firefox/addon/jsguardian/firefox/addon/blockaboutaddons">writing
+a review.</a>
+    </p>
+    <!-- text copied from LeechBlock -->
+
     <script src="blockpage.js"></script>
   </body>
 </html>

@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
 
-  "name": "JSGuardian: Filter Within Your Browser",
-  "version": "1.1.0",
+  "name": "Web Content Filter (within Your Browser)",
+  "version": "1.2.0",
 
-  "short_name": "JSGuardian",
+  "short_name": "Web Content Filter",
   "author": "serv-inc",
   "homepage_url": "https://github.com/serv-inc/JSGuardian",
   "applications": { "gecko": { "id": "@wsf" } },
