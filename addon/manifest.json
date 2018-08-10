@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Web Content Filter (within Your Browser)",
-  "version": "1.2.0",
+  "name": "Web Content Filter (within your Browser)",
+  "version": "1.3.0",
 
   "short_name": "Web Content Filter",
   "author": "serv-inc",

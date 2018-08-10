@@ -6,6 +6,9 @@ input {
 label {
     padding-right: 8px;
     display: inline-block;
+    min-width: 80px;
+    text-align: right;
+    vertical-align: middle;
 }
 
 p {

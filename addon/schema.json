@@ -15,6 +15,10 @@
         }
       }
     },
+    "blockpage": {
+      "description": "if set, use this instead of blockpage",
+      "type": "string"
+    },
     "whitelist": {
       "description": "regex string to whitelist sites",
       "type": "string"

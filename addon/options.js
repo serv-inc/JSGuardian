@@ -20,6 +20,9 @@ function saveOptions(e) {
   if ( ! $set.isManaged("whitelist") ) {
     $set.whitelist = document.querySelector("#whitelist").value;
   }
+  if ( ! $set.isManaged("blockpage") ) {
+    $set.blockpage = document.querySelector("#blockpage").value;
+  }
   if ( ! $set.isManaged("blockvals") ) {
     let blockvals = [];
     [2,3,5,10,20,25,30,40,50,60,70,80,90,100,120,130,150].forEach(function(id){
@@ -47,6 +50,8 @@ function restoreOptions() {
   _disableIfManaged($set, "limit");
   document.querySelector("#whitelist").value = $set.whitelist;
   _disableIfManaged($set, "whitelist");
+  document.querySelector("#blockpage").value = $set.blockpage;
+  _disableIfManaged($set, "blockpage");
   $set.blockvals.forEach(function(el) {
     document.querySelector("#p" + el.name).value = el.value;
     _disableIfManaged($set, "blockvals", "p" + el.name);
