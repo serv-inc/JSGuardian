@@ -8,7 +8,6 @@
 /* globals setTimeout */
 // licensed under the MPL 2.0 by (github.com/serv-inc)
 
-/* OPTIONS CODE */
 class Settings {
   /** initializes from managed, local storage. on first load from preset.json */
   constructor() {
