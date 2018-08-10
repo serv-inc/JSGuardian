@@ -4,6 +4,11 @@ A content filter for websites, emulating dansguardian's score-based filter in Ja
 [[https://addons.mozilla.org/de/firefox/addon/jsguardian/][https://img.shields.io/amo/v/jsguardian.svg]]
 [[https://chrome.google.com/webstore/detail/jsguardian/ojofglimbmclnbinpbjnhcmkmipplibi][https://img.shields.io/chrome-web-store/v/ojofglimbmclnbinpbjnhcmkmipplibi.svg]]
 * Versions
+** 1.3.0
+*** Lacked
+    possibility to set another block page target (like =about:blank=)
+
+    - This needs to be a valid URL. You have been warned (\trade \smiley).
 ** 1.2.0
 *** Lacked
     block reasons were not shown
