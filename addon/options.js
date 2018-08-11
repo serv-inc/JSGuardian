@@ -15,13 +15,13 @@ function saveOptions(e) {
   }
   let $set = chrome.extension.getBackgroundPage().getSettings();
   if ( ! $set.isManaged("limit") ) {
-    $set.limit = document.querySelector("#limit").value;
+    $set.limit = getSmart(document.querySelector("#limit"));
   }
   if ( ! $set.isManaged("whitelist") ) {
-    $set.whitelist = document.querySelector("#whitelist").value;
+    $set.whitelist = getSmart(document.querySelector("#whitelist"));
   }
   if ( ! $set.isManaged("blockpage") ) {
-    $set.blockpage = document.querySelector("#blockpage").value;
+    $set.blockpage = getSmart(document.querySelector("#blockpage"));
   }
   if ( ! $set.isManaged("blockvals") ) {
     let blockvals = [];
@@ -58,6 +58,22 @@ function restoreOptions() {
   });
 }
 
+function setSmart(domElement, value) {
+  if ( typeof value !== "undefined" ) {
+    domElement.value = value;
+  } else {
+    domElement.value = "";
+  }
+}
+
+// can break if sth defined "undefined"
+function getSmart(domElement) {
+  if ( domElement.value !== "" ) {
+    return domElement.value;
+  } else {
+    return undefined;
+  }
+}
 
 /** sets element to readonly if in managedStorage */
 function _disableIfManaged($set, element, place=null) {

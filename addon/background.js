@@ -11,6 +11,7 @@
  * @fileoverview looks through all received text to find words, adds up
  * score, shows blocking page
  */
+const URL_RE = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
 /** add URLS, and check whether added */
 class BlockCache {
@@ -43,7 +44,7 @@ chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
 // how to validate blockpage? new URL(blockpage) is not available?
 function setBlockPage(sender, phraseArray=['']) {
   var blockpage;
-  if (typeof getSettings().blockpage !== "undefined") {
+  if (isValid(getSettings().blockpage)) {
     blockpage = getSettings().blockpage;
   } else {
     blockpage = chrome.extension.getURL('blockpage.html')
@@ -51,6 +52,10 @@ function setBlockPage(sender, phraseArray=['']) {
       + '&' + JSON.stringify(phraseArray);
   }
   chrome.tabs.update(sender.tab.id, {'url': blockpage});
+}
+
+function isValid(urlString) {
+  return typeof urlString === "string" && URL_RE.test(urlString);
 }
 
 // td: this is non-testable due to i, score, ... above, maybe refactor

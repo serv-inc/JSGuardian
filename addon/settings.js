@@ -118,7 +118,7 @@ class Settings {
   save() {
     let out = {"_initialized": true};
     for (let el in this._settings) {
-      if ( ! this.isManaged(el) ) {
+      if ( ! this.isManaged(el) && typeof(el) !== "undefined") {
         out[el] = this._settings[el];
       }
     }
