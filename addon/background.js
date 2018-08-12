@@ -42,14 +42,15 @@ chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
 });
 
 // how to validate blockpage? new URL(blockpage) is not available?
-function setBlockPage(sender, phraseArray=['']) {
+function setBlockPage(sender, phraseArray=[''], limit="???") {
   var blockpage;
   if (isValid(getSettings().blockpage)) {
     blockpage = getSettings().blockpage;
   } else {
     blockpage = chrome.extension.getURL('blockpage.html')
       + '?' + encodeURIComponent(sender.tab.url)
-      + '&' + JSON.stringify(phraseArray);
+      + '&' + JSON.stringify(phraseArray)
+      + '&' + limit;
   }
   chrome.tabs.update(sender.tab.id, {'url': blockpage});
 }
@@ -63,9 +64,12 @@ function scan(pageText, sender, score=0, matches=[],
               i=(getSettings().blockvals.length-1)) {
   score += _do_score(pageText, getSettings().blockvals[i], matches);
 
-  if ( i === 0 && score > getSettings().limit ) {
+  if ( score > getSettings().limit ) {
     blockCache.add(sender.url);
-    setBlockPage(sender, matches);
+    if ( i > 0 ) {
+      score = ">=" + score;
+    }
+    setBlockPage(sender, matches, score);
   }
 
   if ( i > 0 ) {
