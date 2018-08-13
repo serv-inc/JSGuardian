@@ -49,7 +49,7 @@ function setBlockPage(sender, phraseArray=[''], limit="???") {
   } else {
     blockpage = chrome.extension.getURL('blockpage.html')
       + '?' + encodeURIComponent(sender.tab.url)
-      + '&' + JSON.stringify(phraseArray)
+      + '&' + encodeURIComponent(JSON.stringify(phraseArray))
       + '&' + limit;
   }
   chrome.tabs.update(sender.tab.id, {'url': blockpage});
