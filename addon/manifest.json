@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Web Content Filter (within your Browser)",
-  "version": "1.4.0",
+  "version": "1.4.1",
 
   "short_name": "Web Content Filter",
   "author": "serv-inc",

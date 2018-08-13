@@ -1,9 +1,9 @@
 {
   "type": "object",
   "properties": {
-    "limit": {
-      "description": "maximum score for which to allow page",
-      "type": "integer"
+    "blockpage": {
+      "description": "if set, use this instead of blockpage",
+      "type": "string"
     },
     "blockvals": {
       "type": "array",
@@ -15,9 +15,9 @@
         }
       }
     },
-    "blockpage": {
-      "description": "if set, use this instead of blockpage",
-      "type": "string"
+    "limit": {
+      "description": "maximum score for which to allow page",
+      "type": "integer"
     },
     "whitelist": {
       "description": "regex string to whitelist sites",
