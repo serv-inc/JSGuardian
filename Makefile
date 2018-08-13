@@ -12,6 +12,7 @@ lint:
 	python2 -m json.tool addon/preset.json > /dev/null
 	python2 -m json.tool addon/schema.json > /dev/null
 	# tidy unavailable on OpenBSD
-	#tidy -eq addon/options.html
-	#tidy -eq addon/blockpage.html
+	tidy -eq addon/options.html
+	tidy -eq addon/blockpage.html
+	./check_schema_equals_preset.sh
 
