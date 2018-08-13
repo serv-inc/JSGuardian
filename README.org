@@ -5,6 +5,9 @@ A content filter for websites, emulating dansguardian's score-based filter in Ja
 [[https://addons.mozilla.org/de/firefox/addon/jsguardian/][https://img.shields.io/amo/d/jsguardian.svg]]
 [[https://chrome.google.com/webstore/detail/jsguardian/ojofglimbmclnbinpbjnhcmkmipplibi][https://img.shields.io/chrome-web-store/v/ojofglimbmclnbinpbjnhcmkmipplibi.svg]]
 * Versions
+** 1.4.2
+*** Failed
+    to show the score if an ampersand, =&=, was in the blocked phrases
 ** 1.4.1
 *** Failed
     to persist the blockpage, credits to hllwdfr@github
