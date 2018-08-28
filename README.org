@@ -5,6 +5,9 @@ A content filter for websites, emulating dansguardian's score-based filter in Ja
 [[https://addons.mozilla.org/de/firefox/addon/jsguardian/][https://img.shields.io/amo/d/jsguardian.svg]]
 [[https://chrome.google.com/webstore/detail/jsguardian/ojofglimbmclnbinpbjnhcmkmipplibi][https://img.shields.io/chrome-web-store/v/ojofglimbmclnbinpbjnhcmkmipplibi.svg]]
 * Versions
+** 1.5.1
+*** Failed
+    by scanning the blockpage, which contained all the words, so that just the cached block page was shown.
 ** 1.5.0
 *** Lacked
     searching of iframes, e.g. in Google Translate

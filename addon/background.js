@@ -13,6 +13,8 @@
  */
 const URL_RE = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
+const BLOCKPAGE_URL = 'blockpage.html';
+
 /** add URLS, and check whether added */
 class BlockCache {
   constructor() {
@@ -32,7 +34,8 @@ class BlockCache {
 let blockCache = new BlockCache();
 
 chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
-  if ( ! getSettings().whitelistRegExp.test(sender.url) ) {
+  if ( ! getSettings().whitelistRegExp.test(sender.url)
+       && ! sender.url.includes(BLOCKPAGE_URL) ) {
     if ( blockCache.allow(sender.url) ) {
       scan(pageText, sender);
     } else {
@@ -47,7 +50,7 @@ function setBlockPage(sender, phraseArray=[''], limit="???") {
   if (isValid(getSettings().blockpage)) {
     blockpage = getSettings().blockpage;
   } else {
-    blockpage = chrome.extension.getURL('blockpage.html')
+    blockpage = chrome.extension.getURL(BLOCKPAGE_URL)
       + '?' + encodeURIComponent(sender.tab.url)
       + '&' + encodeURIComponent(JSON.stringify(phraseArray))
       + '&' + limit;
