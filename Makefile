@@ -13,5 +13,5 @@ lint:
 	python2 -m json.tool addon/schema.json > /dev/null
 	tidy -eq addon/options.html
 	tidy -eq addon/blockpage.html
-	./check_schema_equals_preset.sh
+	./meta/check_schema_equals_preset.sh
 
