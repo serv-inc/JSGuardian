@@ -3,6 +3,7 @@
 /* jshint loopfunc: true */
 /* jshint laxbreak: true */
 /* globals chrome */
+/* globals console */ // debug
 /* globals setTimeout */
 /* globals getSettings */
 // licensed under the MPL 2.0 by (github.com/serv-inc)
@@ -39,6 +40,8 @@ chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
     if ( blockCache.allow(sender.url) ) {
       scan(pageText, sender);
     } else {
+      console.log("redirecting from " + sender.url
+                  + " to 'cached site' blockpage");
       setBlockPage(sender, ['cached site']);
     }
   }
@@ -46,6 +49,10 @@ chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
 
 // how to validate blockpage? new URL(blockpage) is not available?
 function setBlockPage(sender, phraseArray=[''], limit="???") {
+  if ( blockCache.allow(sender.url) ) {
+    blockCache.add(sender.url);
+  }
+
   var blockpage;
   if (isValid(getSettings().blockpage)) {
     blockpage = getSettings().blockpage;
@@ -68,7 +75,6 @@ function scan(pageText, sender, score=0, matches=[],
   score += _do_score(pageText, getSettings().blockvals[i], matches);
 
   if ( score > getSettings().limit ) {
-    blockCache.add(sender.url);
     if ( i > 0 ) {
       score = ">=" + score;
     }
