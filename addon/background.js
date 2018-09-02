@@ -23,6 +23,7 @@ class BlockCache {
   }
 
   add(url) {
+    console.log("add " + url);
     if ( this.allow(url) ) {
       this._cache.push(url);
     }
@@ -49,6 +50,10 @@ chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
 
 // how to validate blockpage? new URL(blockpage) is not available?
 function setBlockPage(sender, phraseArray=[''], limit="???") {
+  if ( sender.url.includes(BLOCKPAGE_URL) ) {
+    return;
+  }
+  
   if ( blockCache.allow(sender.url) ) {
     blockCache.add(sender.url);
   }
