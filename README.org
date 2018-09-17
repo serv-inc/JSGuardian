@@ -4,6 +4,8 @@ A content filter for websites, emulating dansguardian's score-based filter in Ja
 [[https://addons.mozilla.org/de/firefox/addon/jsguardian/][https://img.shields.io/amo/v/jsguardian.svg]] 
 [[https://addons.mozilla.org/de/firefox/addon/jsguardian/][https://img.shields.io/amo/d/jsguardian.svg]]
 [[https://chrome.google.com/webstore/detail/jsguardian/ojofglimbmclnbinpbjnhcmkmipplibi][https://img.shields.io/chrome-web-store/v/ojofglimbmclnbinpbjnhcmkmipplibi.svg]]
+
+Tested (Linux): [[https://mozilla.org/][https://img.shields.io/badge/Firefox-ESR%2062.0.2-brightgreen.svg]] [[https://www.chromium.org/][https://img.shields.io/badge/Chromium-69.0.3497.81-brightgreen.svg]] [[https://www.waterfoxproject.org/en-US/waterfox/][https://img.shields.io/badge/Waterfox%20-56.2.3-brightgreen.svg]]
 * Versions
 ** 1.5.2
 *** Failed
