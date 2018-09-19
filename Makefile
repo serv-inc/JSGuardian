@@ -15,3 +15,7 @@ lint:
 	tidy -eq addon/blockpage.html
 	./meta/check_schema_equals_preset.sh
 
+
+cp: zip
+	cp jsguardian.zip /tmp
+	cd /tmp && unzip -o jsguardian.zip
