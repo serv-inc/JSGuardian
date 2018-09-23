@@ -5,6 +5,8 @@ A content filter for websites, emulating dansguardian's score-based filter in Ja
 [[https://addons.mozilla.org/de/firefox/addon/jsguardian/][https://img.shields.io/amo/d/jsguardian.svg]]
 [[https://chrome.google.com/webstore/detail/jsguardian/ojofglimbmclnbinpbjnhcmkmipplibi][https://img.shields.io/chrome-web-store/v/ojofglimbmclnbinpbjnhcmkmipplibi.svg]]
 * Versions
+** 1.5.5
+*** Failed to display the correct score
 ** 1.5.2
 *** Failed
     if it was triggered multiple times, the blockpage was shown
