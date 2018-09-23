@@ -53,7 +53,7 @@ function setBlockPage(sender, phraseArray=[''], limit="???") {
   if ( sender.url.includes(BLOCKPAGE_URL) ) {
     return;
   }
-  
+
   if ( blockCache.allow(sender.url) ) {
     blockCache.add(sender.url);
   }
@@ -80,10 +80,7 @@ function scan(pageText, sender, score=0, matches=[],
   score += _do_score(pageText, getSettings().blockvals[i], matches);
 
   if ( score > getSettings().limit ) {
-    if ( i > 0 ) {
-      score = ">=" + score;
-    }
-    setBlockPage(sender, matches, score);
+    setBlockPage(sender, matches, ">= " + score);
   }
 
   if ( i > 0 ) {
