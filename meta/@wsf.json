@@ -1,0 +1,10 @@
+{
+  "name": "@wsf",
+  "description": "ignored",
+  "type": "storage",
+  "data":
+  {
+    "limit": 232,
+    "whitelist": "mozilla.org|dansguardian.org"
+  }
+}
