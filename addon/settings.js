@@ -20,10 +20,12 @@ class Settings {
     this._listeners = {};
     let storagePolyfill = chrome.storage.managed || { get: (a, b) => b({}) };
     storagePolyfill.get(null, result => {
-      for (let el in result) {
-        if ( result.hasOwnProperty(el) ) {
-          this._managed.push(el);
-          this._addToSettings(el, result[el]);
+      if ( typeof(result) !== "undefined" ) {
+        for (let el in result) {
+          if ( result.hasOwnProperty(el) ) {
+            this._managed.push(el);
+            this._addToSettings(el, result[el]);
+          }
         }
       }
       chrome.storage.local.get(null, result => {
