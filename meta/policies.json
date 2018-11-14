@@ -1,0 +1,12 @@
+{
+  "policies": {
+    "Extensions": {
+	"Install": [
+	    "https://addons.mozilla.org/firefox/downloads/file/1059162/web_site_filter-1.6.0-an+fx.xpi"
+	],
+	"Locked": [
+	    "@wsf"
+	]
+    }
+  }
+}
