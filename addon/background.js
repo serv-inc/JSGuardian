@@ -1,11 +1,6 @@
 "use strict";
-/* jshint esversion: 6, strict: global */
-/* jshint loopfunc: true */
-/* jshint laxbreak: true */
-/* globals chrome */
-/* globals console */ // debug
-/* globals setTimeout */
-/* globals getSettings */
+/* jshint esversion: 6, strict: global, loopfunc: true, laxbreak: true */
+/* globals chrome, getSettings, setTimeout */
 // licensed under the MPL 2.0 by (github.com/serv-inc)
 
 /**
@@ -23,7 +18,6 @@ class BlockCache {
   }
 
   add(url) {
-    console.log("add " + url);
     if ( this.allow(url) ) {
       this._cache.push(url);
     }
@@ -41,8 +35,6 @@ chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
     if ( blockCache.allow(sender.url) ) {
       scan(pageText, sender);
     } else {
-      console.log("redirecting from " + sender.url
-                  + " to 'cached site' blockpage");
       setBlockPage(sender, ['cached site']);
     }
   }
