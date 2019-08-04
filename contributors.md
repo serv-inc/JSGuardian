@@ -1,2 +1,2 @@
 # Contributors
-* Anmol Singh Jaggi
+* [Anmol Singh Jaggi](https://github.com/Anmol-Singh-Jaggi)
