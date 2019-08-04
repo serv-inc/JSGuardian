@@ -1,6 +1,6 @@
 "use strict";
 // licensed under GPL 2 by github.com/serv-inc version from 2018-10-04
-chrome = {
+window.chrome = {
   _store: {"limit" : 160, _initialized: true},
   _store_man: {"limit" : 160},
   _store_updated: {"limit" : 0},
