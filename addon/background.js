@@ -10,6 +10,7 @@
 const URL_RE = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
 const BLOCKPAGE_URL = 'blockpage.html';
+const NO_SCAN = /extension:/;
 
 /** add URLS, and check whether added */
 class BlockCache {
@@ -31,7 +32,7 @@ let blockCache = new BlockCache();
 
 chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
   if ( ! getSettings().whitelistRegExp.test(sender.url)
-       && ! sender.url.includes(BLOCKPAGE_URL) ) {
+       && ! NO_SCAN.test(sender.url) ) {
     if ( blockCache.allow(sender.url) ) {
       scan(pageText, sender);
     } else {
@@ -42,7 +43,7 @@ chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
 
 // how to validate blockpage? new URL(blockpage) is not available?
 function setBlockPage(sender, phraseArray=[''], limit="???") {
-  if ( sender.url.includes(BLOCKPAGE_URL) ) {
+  if ( NO_SCAN.test(sender.url) ) {
     return;
   }
 
