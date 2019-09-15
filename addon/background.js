@@ -66,24 +66,26 @@ function isValid(urlString) {
   return typeof urlString === "string" && URL_RE.test(urlString);
 }
 
-// td: this is non-testable due to i, score, ... above, maybe refactor
-function scan(pageText, sender, score=0, matches=[],
-              i=(getSettings().blockvals.length-1)) {
-  score += _do_score(pageText, getSettings().blockvals[i], matches);
-
-  if ( score > getSettings().limit ) {
-    setBlockPage(sender, matches, ">= " + score);
-  }
-
-  if ( i > 0 ) {
-    setTimeout(function() {
-      scan(pageText, sender, score, matches, i-1);
-    }, 0);
-  }
+// td: this is non-testable due to i, score, ... above (and matches),
+// maybe refactor
+function scan(pageText, sender, score=0, matches=[]) {
+  var threads = [];
+  getSettings().blockvals.foreach(
+    (blockval) => {
+      var t =_do_score(pageText, getSettings().blockvals[i], matches);
+      threads.push(t);
+      t.then(singlescore => {
+        score += singlescore;
+        if ( score > getSettings().limit ) {
+          setBlockPage(sender, matches, ">= " + score);
+        }
+      });
+    }
+  );
 }
 
 /** @return score of this blockObject on text */
-function _do_score(pageText, blockObject, all_matches) {
+async function _do_score(pageText, blockObject, all_matches) {
   let tmp = pageText.match(RegExp(blockObject.value, "gi"));
   let matches = new Set();
   if ( tmp !== null ) {
