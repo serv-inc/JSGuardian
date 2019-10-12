@@ -3,6 +3,7 @@ python ./extract.py /etc/e2guardian/lists/phraselists/pornograph/weighted"""
 from __future__ import print_function
 import itertools
 import logging
+import json
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -35,5 +36,4 @@ def from_lines(lines):
 if __name__ == "__main__":
     import sys
     f = open(sys.argv[1])
-    print(from_lines(f))
-        
+    print(json.dumps(from_lines(f)))
