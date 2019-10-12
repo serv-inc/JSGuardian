@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 """extract single file to produce blockvals, example usage:
 python ./extract.py /etc/e2guardian/lists/phraselists/pornograph/weighted"""
 from __future__ import print_function
@@ -6,16 +7,17 @@ import logging
 import json
 
 #logging.basicConfig(level=logging.DEBUG)
+REMOVEBRACKETS={ord(">"): None, ord("<"): None}
 
 def from_line(line):
     '''single line to regex
     @return tuple (regex, score)'''
     (matches, score) = line.rsplit("<", 1)
-    parts = [s.translate(None, "<>") for s in matches.split(">,<")]
+    parts = [s.translate(REMOVEBRACKETS) for s in matches.split(">,<")]
     out = ".*" + parts.pop()
     for part in parts:
         out = "(?=.*" + part + ")"  + out
-    return (out, int(score.split("#")[0].translate(None, "<>")))
+    return (out, int(score.split("#")[0].translate(REMOVEBRACKETS)))
 
 def from_lines(lines):
     '''multi-line to dict
