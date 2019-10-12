@@ -5,7 +5,7 @@ import itertools
 import logging
 import json
 
-logging.basicConfig(level=logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)
 
 def from_line(line):
     '''single line to regex
