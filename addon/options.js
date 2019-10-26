@@ -1,6 +1,6 @@
 "use strict";
 /* jshint esversion: 6, strict: global */
-/* globals chrome, console, document, window */
+/* globals chrome */
 // licensed under the MPL 2.0 by (github.com/serv-inc)
 let initError = false;
 
@@ -53,14 +53,6 @@ function restoreOptions() {
     document.querySelector("#p" + el.name).value = el.value;
     _disableIfManaged($set, "blockvals", "p" + el.name);
   });
-}
-
-function setSmart(domElement, value) {
-  if ( typeof value !== "undefined" ) {
-    domElement.value = value;
-  } else {
-    domElement.value = "";
-  }
 }
 
 // can break if sth defined "undefined"

@@ -8,10 +8,10 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "jshint": "^2.10.2"
+    "eslint": "^6.6.0",
   },
   "scripts": {
-    "test": "make tes"
+    "test": "make test"
   },
   "repository": {
     "type": "git",

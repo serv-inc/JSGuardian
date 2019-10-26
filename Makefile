@@ -1,11 +1,11 @@
-JSHINT=./node_modules/jshint/bin/jshint
+LINTER=./node_modules/.bin/eslint
 
 
 zip: lint
 	cd addon; zip ../jsguardian.zip *
 
 lint:
-	${JSHINT} addon/*.js
+	${LINTER} addon/*.js
 	! grep browser addon/*.js
 	# grep '"use strict";' addon/*.js > /dev/null checked by jshint
 	python2 -m json.tool addon/manifest.json > /dev/null
