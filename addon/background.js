@@ -1,13 +1,13 @@
 "use strict";
 /* jshint esversion: 6, strict: global, loopfunc: true, laxbreak: true */
-/* globals chrome, getSettings, setTimeout */
+/* globals chrome, getSettings */
 // licensed under the MPL 2.0 by (github.com/serv-inc)
 
 /**
  * @fileoverview looks through all received text to find words, adds up
  * score, shows blocking page
  */
-const URL_RE = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+const URL_RE = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
 const BLOCKPAGE_URL = 'blockpage.html';
 const NO_SCAN = /extension:/;
@@ -30,7 +30,7 @@ class BlockCache {
 }
 let blockCache = new BlockCache();
 
-chrome.runtime.onMessage.addListener(function(pageText, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(pageText, sender) {
   if ( ! getSettings().whitelistRegExp.test(sender.url)
        && ! NO_SCAN.test(sender.url) ) {
     if ( blockCache.allow(sender.url) ) {
@@ -73,7 +73,7 @@ function scan(pageText, sender, score=0, matches=[]) {
   var threads = [];
   getSettings().blockvals.foreach(
     (blockval) => {
-      var t =_do_score(pageText, getSettings().blockvals[i], matches);
+      var t =_do_score(pageText, blockval, matches);
       threads.push(t);
       t.then(singlescore => {
         score += singlescore;

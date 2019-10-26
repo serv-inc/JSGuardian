@@ -1,3 +1,5 @@
+/** blockpage initialization */
+/* globals chrome */
 document.querySelector("#showOptions").onclick=function() {
   chrome.runtime.openOptionsPage();
 };
