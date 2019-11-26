@@ -71,7 +71,7 @@ function isValid(urlString) {
 // maybe refactor
 function scan(pageText, sender, score=0, matches=[]) {
   var threads = [];
-  getSettings().blockvals.foreach(
+  getSettings().blockvals.forEach(
     (blockval) => {
       var t =_do_score(pageText, blockval, matches);
       threads.push(t);
