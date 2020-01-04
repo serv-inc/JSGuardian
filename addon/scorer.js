@@ -8,8 +8,12 @@ parentPort.on("message", json => {
   if (task === "init") {
     regex = RegExp(workerData, "gi");
   } else if (task === "scan") {
-//    console.log("r2", regex)
-    parentPort.postMessage(options.match(regex).length)
+    const matches = options.match(regex);
+    if (matches === null) {
+      parentPort.postMessage(0);
+    } else {
+      parentPort.postMessage(matches.length);
+    }
   } else {
     throw new Error("wut: " + task);
   }
