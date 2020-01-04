@@ -8,10 +8,11 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "eslint": "^6.6.0"
+    "eslint": "^6.6.0",
+    "jest": "^24.9.0"
   },
   "scripts": {
-    "test": "make test"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
