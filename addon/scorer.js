@@ -1,3 +1,4 @@
+// nodejs code to use same api as web workers
 if (isNode()) {
   var { parentPort } = require("worker_threads");
 }
@@ -7,12 +8,14 @@ if (typeof onmessage === "undefined" && isNode()) {
   };
 }
 if (typeof postMessage === "undefined" && isNode()) {
-  var postMessage = parentPort.postMessage;
+  var postMessage = function(message) {
+    parentPort.postMessage(message);
+  };
 }
 
 let regex;
 
-parentPort.on("message", json => {
+onmessage(json => {
   var [task, options] = JSON.parse(json);
   if (task === "init") {
     regex = RegExp(options, "gi");
