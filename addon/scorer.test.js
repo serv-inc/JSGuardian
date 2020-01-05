@@ -17,17 +17,19 @@ describe("scorer", () => {
         done();
       }
     };
-    scorer.postMessage(["init", "hello"]);
+    scorer.postMessage(["init", { regex: "hello", flags: "gi", times: 2 }]);
     scorer.postMessage(["scan", "hello"]);
   });
 
   describe("initialized", () => {
-    beforeEach(() => scorer.postMessage(["init", "hello"]));
+    beforeEach(() =>
+      scorer.postMessage(["init", { regex: "hello", flags: "gi", times: 2 }])
+    );
 
     it("scan does match once", done => {
       scorer.onmessage = function(val) {
         if (val.data[0] === "scan done") {
-          assert.equal(val.data[1], 1); //    val.data.should.equal(0);
+          assert.equal(val.data[1], 2); //    val.data.should.equal(0);
           done();
         }
       };
