@@ -8,11 +8,14 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^6.6.0",
-    "jest": "^24.9.0"
+    "mocha": "^7.0.0",
+    "tiny-worker": "^2.3.0"
   },
   "scripts": {
-    "test": "jest"
+    "oldkarmatest": "env CHROME_BIN=/usr/bin/chromium karma start --single-run --browsers ChromeHeadless karma.conf.js",
+    "test": "mocha addon/*test.js"
   },
   "repository": {
     "type": "git",
