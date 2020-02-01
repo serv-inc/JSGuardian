@@ -19,38 +19,39 @@ describe("multi scorer", _ => {
   it("scan initializes", done => {
     const multi = new Worker(FILE);
     multi.onmessage = function(val) {
-      if (val.data[0] === "init done") {
+      if (val.data.type === "init done") {
         multi.terminate();
         done();
       }
     };
-    multi.postMessage(["init", INIT]);
-  });
-
-  it("scan does match once", done => {
-    const multi = new Worker(FILE);
-    multi.onmessage = function(val) {
-      if (val.data[0] === "scan done") {
-        assert.equal(val.data[1], 3); //    val.data.should.equal(0);
-        multi.terminate();
-        done();
-      }
-    };
-    multi.postMessage(["init", INIT]);
-    multi.postMessage(["scan", "hello"]);
+    multi.postMessage({type: "init", value: INIT});
   });
 
   it("scan does not match", done => {
     const multi = new Worker(FILE);
     multi.onmessage = function(val) {
-      if (val.data[0] === "scan done") {
-        assert.equal(val.data[1], 0); //    val.data.should.equal(0);
+      if (val.data.type === "scan done") {
+        assert.equal(val.data.score, 0);
         multi.terminate();
         done();
       }
     };
 
-    multi.postMessage(["init", INIT]);
-    multi.postMessage(["scan", "asdf"]);
+    multi.postMessage({type: "init", value: INIT});
+    multi.postMessage({type: "scan", value: "asdf"});
+  });
+
+  it("scan does match", done => {
+    const multi = new Worker(FILE);
+    multi.onmessage = function(val) {
+      if (val.data.type === "scan done") {
+        assert.equal(val.data.score, 3);
+        multi.terminate();
+        done();
+      }
+    };
+
+    multi.postMessage({type: "init", value: INIT});
+    multi.postMessage({type: "scan", value: "hello"});
   });
 });
