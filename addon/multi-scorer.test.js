@@ -14,6 +14,7 @@ const INIT = [
     value: "world"
   }
 ];
+const SENDER = { tab: { id: 1234 }, url: "url" };
 
 describe("multi scorer", _ => {
   it("scan initializes", done => {
@@ -24,7 +25,7 @@ describe("multi scorer", _ => {
         done();
       }
     };
-    multi.postMessage({type: "init", value: INIT});
+    multi.postMessage({ type: "init", value: INIT });
   });
 
   it("scan does not match", done => {
@@ -32,13 +33,15 @@ describe("multi scorer", _ => {
     multi.onmessage = function(val) {
       if (val.data.type === "scan done") {
         assert.equal(val.data.score, 0);
+        assert.deepEqual(val.data.sender, SENDER);
+        assert.deepEqual(val.data.matches, []);
         multi.terminate();
         done();
       }
     };
 
-    multi.postMessage({type: "init", value: INIT});
-    multi.postMessage({type: "scan", value: "asdf"});
+    multi.postMessage({ type: "init", value: INIT });
+    multi.postMessage({ type: "scan", value: "asdf", sender: SENDER });
   });
 
   it("scan does match", done => {
@@ -46,12 +49,14 @@ describe("multi scorer", _ => {
     multi.onmessage = function(val) {
       if (val.data.type === "scan done") {
         assert.equal(val.data.score, 3);
+        assert.deepEqual(val.data.sender, SENDER);
+        assert.deepEqual(val.data.matches, ["hello"]);
         multi.terminate();
         done();
       }
     };
 
-    multi.postMessage({type: "init", value: INIT});
-    multi.postMessage({type: "scan", value: "hello"});
+    multi.postMessage({ type: "init", value: INIT });
+    multi.postMessage({ type: "scan", value: "hello", sender: SENDER });
   });
 });
