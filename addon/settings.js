@@ -6,7 +6,7 @@
 
 class Settings {
   /** initializes from managed, local storage. on first load from preset.json */
-  constructor() {
+  constructor(callback) {
     let _self = this;
     this._settings = {};
     this._managed = [];
@@ -36,9 +36,9 @@ class Settings {
           }
         }
         if ( ! this._initialized ) {
-          this._loadFileSettings();
+          this._loadFileSettings(callback);
         } else {
-          this.finish();
+          this.finish(callback);
         }
       });
     });
@@ -103,9 +103,12 @@ class Settings {
   }
 
 
-  finish() {
+  finish(callback) {
     this._loaded = true;
     this.save();
+    if (typeof callback !== "undefined") {
+      callback();
+    }
   }
 
 
@@ -126,7 +129,7 @@ class Settings {
   }
 
 
-  _loadFileSettings() {
+  _loadFileSettings(callback) {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
     xobj.open('GET', 'preset.json', true);
@@ -139,7 +142,7 @@ class Settings {
             this._addToSettings(el, parsed[el]);
           }
         }
-        this.finish();
+        this.finish(callback);
       }
     };
     xobj.send(null);

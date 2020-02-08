@@ -12,6 +12,19 @@ const URL_RE = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:
 const BLOCKPAGE_URL = 'blockpage.html';
 const NO_SCAN = /extension:/;
 
+let scanner = new Worker("./multi-scorer.js");
+scanner.onmessage = function(val) {
+  if (val.data.type === "scan done") {
+    if ( val.data.score > getSettings().limit ) {
+      setBlockPage(val.data.sender, val.data.matches, ">= " + val.data.score);
+    }
+  } else if (val.data.type === "init done") {
+    // all's well
+  } else {
+    console.error("error scanning ", val);
+  }
+}
+
 /** add URLS, and check whether added */
 class BlockCache {
   constructor() {
@@ -67,31 +80,12 @@ function isValid(urlString) {
   return typeof urlString === "string" && URL_RE.test(urlString);
 }
 
-// td: this is non-testable due to i, score, ... above (and matches),
-// maybe refactor
-function scan(pageText, sender, score=0, matches=[]) {
-  var threads = [];
-  getSettings().blockvals.forEach(
-    (blockval) => {
-      var t =_do_score(pageText, blockval, matches);
-      threads.push(t);
-      t.then(singlescore => {
-        score += singlescore;
-        if ( score > getSettings().limit ) {
-          setBlockPage(sender, matches, ">= " + score);
-        }
-      });
-    }
-  );
+function scan(pageText, sender) {
+  scanner.postMessage({type: "scan", value: pageText, sender: sender});
 }
 
-/** @return score of this blockObject on text */
-async function _do_score(pageText, blockObject, all_matches) {
-  let tmp = pageText.match(RegExp(blockObject.value, "gi"));
-  let matches = new Set();
-  if ( tmp !== null ) {
-    tmp.forEach((el) => {matches.add(el.toLowerCase());});
-  }
-  matches.forEach((el) => all_matches.push(el));
-  return matches.size * blockObject.name;
+function settingsLoaded() {
+  scanner.postMessage({type: "init", value: getSettings().blockvals});
 }
+
+const set = getSettings(settingsLoaded);
