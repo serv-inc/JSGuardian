@@ -12,10 +12,12 @@ const URL_RE = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+|(?:
 const BLOCKPAGE_URL = "blockpage.html";
 const NO_SCAN = /extension:/;
 
+const set = getSettings(settingsLoaded);
+
 let scanner = new Worker("./multi-scorer.js");
 scanner.onmessage = function(val) {
   if (val.data.type === "scan done") {
-    if (val.data.score > getSettings().limit) {
+    if ( val.data.score > set.limit ) {
       setBlockPage(val.data.sender, val.data.matches, ">= " + val.data.score);
     }
   } else if (val.data.type === "init done") {
@@ -44,11 +46,9 @@ class BlockCache {
 let blockCache = new BlockCache();
 
 chrome.runtime.onMessage.addListener(function(pageText, sender) {
-  if (
-    !getSettings().whitelistRegExp.test(sender.url) &&
-    !NO_SCAN.test(sender.url)
-  ) {
-    if (blockCache.allow(sender.url)) {
+  if ( ! set.whitelistRegExp.test(sender.url)
+       && ! NO_SCAN.test(sender.url) ) {
+    if ( blockCache.allow(sender.url) ) {
       scan(pageText, sender);
     } else {
       setBlockPage(sender, ["cached site"]);
@@ -67,8 +67,8 @@ function setBlockPage(sender, phraseArray = [""], limit = "???") {
   }
 
   var blockpage;
-  if (isValid(getSettings().blockpage)) {
-    blockpage = getSettings().blockpage;
+  if (isValid(set.blockpage)) {
+    blockpage = set.blockpage;
   } else {
     blockpage =
       chrome.extension.getURL(BLOCKPAGE_URL) +
@@ -91,7 +91,6 @@ function scan(pageText, sender) {
 }
 
 function settingsLoaded() {
-  scanner.postMessage({ type: "init", value: getSettings().blockvals });
+  scanner.postMessage({type: "init", value: set.blockvals});
 }
 
-const set = getSettings(settingsLoaded);
