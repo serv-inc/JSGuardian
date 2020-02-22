@@ -10,7 +10,9 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^6.6.0",
+    "eslint-plugin-jest": "^23.7.0",
     "mocha": "^7.0.0",
+    "prettier": "^1.19.1",
     "tiny-worker": "^2.3.0"
   },
   "scripts": {
