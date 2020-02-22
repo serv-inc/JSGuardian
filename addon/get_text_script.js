@@ -4,10 +4,11 @@
 // licensed under the MPL 2.0 by (github.com/serv-inc)
 
 function send() {
-    chrome.runtime.sendMessage(document.body.innerText ||
-                               document.body.textContent);
+  chrome.runtime.sendMessage(
+    document.body.innerText || document.body.textContent
+  );
 }
 
 send();
 
-window.addEventListener('popstate', send());
+window.addEventListener("popstate", send());

@@ -1,38 +1,38 @@
 input {
-    width: 80%;
-    flex: 1;
+  width: 80%;
+  flex: 1;
 }
 
 label {
-    padding-right: 8px;
-    display: inline-block;
-    min-width: 80px;
-    text-align: right;
-    vertical-align: middle;
+  padding-right: 8px;
+  display: inline-block;
+  min-width: 80px;
+  text-align: right;
+  vertical-align: middle;
 }
 
 p {
-    display: flex;
+  display: flex;
 }
 
 row {
-    width: 100%;
+  width: 100%;
 }
 
 .centered {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .cell {
-    display: table-cell;
+  display: table-cell;
 }
 
 .row {
-    display: table-row;
+  display: table-row;
 }
 
 .options {
-    width: 100%;
+  width: 100%;
 }

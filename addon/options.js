@@ -6,23 +6,41 @@ let initError = false;
 
 function saveOptions(e) {
   e.preventDefault();
-  if ( initError ) {
+  if (initError) {
     console.error("did not save erroneous options");
     return;
   }
   let $set = chrome.extension.getBackgroundPage().getSettings();
-  if ( ! $set.isManaged("limit") ) {
+  if (!$set.isManaged("limit")) {
     $set.limit = getSmart(document.querySelector("#limit"));
   }
-  if ( ! $set.isManaged("whitelist") ) {
+  if (!$set.isManaged("whitelist")) {
     $set.whitelist = getSmart(document.querySelector("#whitelist"));
   }
-  if ( ! $set.isManaged("blockpage") ) {
+  if (!$set.isManaged("blockpage")) {
     $set.blockpage = getSmart(document.querySelector("#blockpage"));
   }
-  if ( ! $set.isManaged("blockvals") ) {
+  if (!$set.isManaged("blockvals")) {
     let blockvals = [];
-    [2,3,5,10,20,25,30,40,50,60,70,80,90,100,120,130,150].forEach(function(id){
+    [
+      2,
+      3,
+      5,
+      10,
+      20,
+      25,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80,
+      90,
+      100,
+      120,
+      130,
+      150
+    ].forEach(function(id) {
       blockvals.push({
         name: id,
         value: document.querySelector("#p" + id).value
@@ -34,9 +52,8 @@ function saveOptions(e) {
   window.close();
 }
 
-
 function restoreOptions() {
-  if ( ! chrome ) {
+  if (!chrome) {
     console.error("error on option initialization");
     initError = true;
     return;
@@ -57,7 +74,7 @@ function restoreOptions() {
 
 // can break if sth defined "undefined"
 function getSmart(domElement) {
-  if ( domElement.value !== "" ) {
+  if (domElement.value !== "") {
     return domElement.value;
   } else {
     return undefined;
@@ -65,13 +82,12 @@ function getSmart(domElement) {
 }
 
 /** sets element to readonly if in managedStorage */
-function _disableIfManaged($set, element, place=null) {
+function _disableIfManaged($set, element, place = null) {
   place = place || element;
-  if ( $set.isManaged(element) ) {
+  if ($set.isManaged(element)) {
     document.querySelector("#" + place).disabled = true; // readOnly
   }
 }
-
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
 document.querySelector("form").addEventListener("submit", saveOptions);

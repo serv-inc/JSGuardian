@@ -14,12 +14,13 @@ class Settings {
     this._loaded = false;
     this._saved = true;
     this._listeners = {};
-    let storagePolyfill = ((chrome.storage && chrome.storage.managed)
-                           || { get: (a, b) => b({}) });
+    let storagePolyfill = (chrome.storage && chrome.storage.managed) || {
+      get: (a, b) => b({})
+    };
     storagePolyfill.get(null, result => {
-      if ( typeof(result) !== "undefined" ) {
+      if (typeof result !== "undefined") {
         for (let el in result) {
-          if ( result.hasOwnProperty(el) ) {
+          if (result.hasOwnProperty(el)) {
             this._managed.push(el);
             this._addToSettings(el, result[el]);
           }
@@ -27,15 +28,15 @@ class Settings {
       }
       chrome.storage.local.get(null, result => {
         for (let el in result) {
-          if ( el === "_initialized" ) {
+          if (el === "_initialized") {
             this._initialized = true;
             continue;
           }
-          if ( result.hasOwnProperty(el) && ! this.isManaged(el) ) {
+          if (result.hasOwnProperty(el) && !this.isManaged(el)) {
             this._addToSettings(el, result[el]);
           }
         }
-        if ( ! this._initialized ) {
+        if (!this._initialized) {
           this._loadFileSettings(callback);
         } else {
           this.finish(callback);
@@ -45,18 +46,21 @@ class Settings {
     // if a managed option becomes unmanaged, use the managed setting as local
     chrome.storage.onChanged.addListener((changes, area) => {
       for (let el in changes) {
-        if ( changes.hasOwnProperty(el) ) {
-          if ( area === "managed" ) {
-            if ( ! _self.isManaged(el) ) { // create
+        if (changes.hasOwnProperty(el)) {
+          if (area === "managed") {
+            if (!_self.isManaged(el)) {
+              // create
               _self._managed.push(el);
-            } else { // update or delete
-              if ( ! changes[el].hasOwnProperty('newValue') ) { // got deleted, use as local
+            } else {
+              // update or delete
+              if (!changes[el].hasOwnProperty("newValue")) {
+                // got deleted, use as local
                 _self._managed.splice(_self._managed.indexOf(el));
               }
             }
           }
           _self._addToSettings(el, changes[el].newValue);
-          if ( el in _self._listeners ) {
+          if (el in _self._listeners) {
             _self._listeners[el].forEach(el => el(changes, area));
           }
         }
@@ -64,44 +68,45 @@ class Settings {
     });
   }
 
-
   get whitelistRegExp() {
     return RegExp(this.whitelist);
   }
-
 
   _addToSettings(el, val) {
     this._settings[el] = val;
     this._addGetSet(el, !this.isManaged(el));
   }
 
-
   // could also trigger a save of that value via set
-  _addGetSet(el, setter=false) {
-    if ( setter ) {
-      Object.defineProperty(this, el,
-                            { get: () => { return this._settings[el]; },
-                              set: (x) => {
-                                this._settings[el] = x;
-                                this._saved = false;
-                              },
-                              configurable: true });
+  _addGetSet(el, setter = false) {
+    if (setter) {
+      Object.defineProperty(this, el, {
+        get: () => {
+          return this._settings[el];
+        },
+        set: x => {
+          this._settings[el] = x;
+          this._saved = false;
+        },
+        configurable: true
+      });
     } else {
-      Object.defineProperty(this, el,
-                            { get: () => { return this._settings[el]; },
-                              configurable: true });
+      Object.defineProperty(this, el, {
+        get: () => {
+          return this._settings[el];
+        },
+        configurable: true
+      });
     }
   }
 
-
   addOnChangedListener(val, listener) {
-    if ( val in this._listeners ) {
+    if (val in this._listeners) {
       this._listeners[val].push(listener);
     } else {
       this._listeners[val] = [listener];
     }
   }
-
 
   finish(callback) {
     this._loaded = true;
@@ -111,16 +116,14 @@ class Settings {
     }
   }
 
-
   isManaged(el) {
     return this._managed.includes(el);
   }
 
-
   save() {
-    let out = {"_initialized": true};
+    let out = { _initialized: true };
     for (let el in this._settings) {
-      if ( ! this.isManaged(el) && typeof(el) !== "undefined") {
+      if (!this.isManaged(el) && typeof el !== "undefined") {
         out[el] = this._settings[el];
       }
     }
@@ -128,17 +131,15 @@ class Settings {
     this._saved = true;
   }
 
-
   _loadFileSettings(callback) {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'preset.json', true);
+    xobj.open("GET", "preset.json", true);
     xobj.onreadystatechange = () => {
       if (xobj.readyState == 4 && xobj.status == "200") {
         let parsed = JSON.parse(xobj.responseText);
         for (let el in parsed) {
-          if ( parsed.hasOwnProperty(el)
-               && ! this.isManaged(el) ) {
+          if (parsed.hasOwnProperty(el) && !this.isManaged(el)) {
             this._addToSettings(el, parsed[el]);
           }
         }
@@ -151,4 +152,6 @@ class Settings {
 
 let $set = new Settings();
 /** @return settings to options page */
-function getSettings() { return $set; }
+function getSettings() {
+  return $set;
+}
