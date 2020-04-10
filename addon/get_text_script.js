@@ -11,4 +11,4 @@ function send() {
 
 send();
 
-window.addEventListener("popstate", send());
+window.addEventListener("popstate", send);
