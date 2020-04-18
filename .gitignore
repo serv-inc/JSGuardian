@@ -1,6 +1,5 @@
 legacy/local
 jsguardian.zip
-*.org
 *~
 node_modules/
 *.org_archive
