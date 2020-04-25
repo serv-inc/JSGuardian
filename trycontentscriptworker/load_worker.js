@@ -1,9 +1,23 @@
 console.log("load_worker loading")
 
-let a = new Worker(chrome.runtime.getURL("./LogWorker.js"))
+function stringToWorker(code) {
+  const blob = new Blob([code], {type: 'application/javascript'});
+  return new Worker(URL.createObjectURL(blob));
+}
 
-a.onmessage = function(received) { console.log("load_worker received from worker "); console.log(received) }
+let a = stringToWorker(`console.log("LogWorker started");
+onmessage = function(e) {
+  console.log("LogWorker received ");
+  console.log(e);
+}`);
 
-a.postMessage("hi")
+console.log(a);
+
+a.onmessage = function(received) {
+  console.log("load_worker received from worker ");
+  console.log(received);
+}
+
+a.postMessage("hi");
 
 console.log("load_worker done")

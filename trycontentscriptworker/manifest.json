@@ -13,9 +13,5 @@
       "js": ["./load_worker.js"],
       "all_frames": true
     }
-  ],
-  "web_accessible_resources": [
-    "./LogWorker.js"
-  ],
-  "content_security_policy": "script-src 'self' https://example.com 'chrome-extension'; object-src 'self' 'chrome-extension'"
+  ]
 }
