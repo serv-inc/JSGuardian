@@ -11,8 +11,6 @@ onmessage = function(e) {
   console.log(e);
 }`);
 
-console.log(a);
-
 a.onmessage = function(received) {
   console.log("load_worker received from worker ");
   console.log(received);
