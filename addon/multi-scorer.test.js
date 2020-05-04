@@ -1,4 +1,5 @@
 if (typeof window === "undefined") {
+  /* eslint-disable-next-line no-redeclare */
   var Worker = require("tiny-worker");
   var assert = require("assert");
 }
@@ -16,7 +17,7 @@ const INIT = [
 ];
 const SENDER = { tab: { id: 1234 }, url: "url" };
 
-describe("multi scorer", _ => {
+describe("multi scorer", () => {
   it("scan initializes", done => {
     const multi = new Worker(FILE);
     multi.onmessage = function(val) {
