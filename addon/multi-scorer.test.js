@@ -1,5 +1,5 @@
 if (typeof window === "undefined") {
-  /* eslint-disable-next-line no-redeclare */
+  // eslint-disable-next-line no-redeclare
   var Worker = require("tiny-worker");
   var assert = require("assert");
 }

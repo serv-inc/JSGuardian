@@ -14,7 +14,7 @@ function stringToWorker(code) {
 let worker = stringToWorker(`console.log("LogWorker started");
 onmessage = function(e) {
   console.log("LogWorker received ");
-  console.log(e);
+  console.log(new TextDecoder('utf-8').decode(e.data));
 }`);
 
 worker.onmessage = function(received) {
@@ -22,6 +22,6 @@ worker.onmessage = function(received) {
   console.log(received);
 }
 
-worker.postMessage('hi');//, [getPageText]);
+worker.postMessage(getPageText());//, [getPageText]);
 
 console.log("load_worker done")
