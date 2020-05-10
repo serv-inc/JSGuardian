@@ -22,3 +22,6 @@ test:
 cp: zip
 	cp jsguardian.zip /tmp
 	cd /tmp && unzip -o jsguardian.zip
+
+push:
+	git pull && git push
