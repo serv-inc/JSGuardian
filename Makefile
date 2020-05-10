@@ -1,7 +1,8 @@
-LINTER=./node_modules/.bin/eslint
+.PHONY: test
+LINTER=npx eslint
 
 
-zip: lint
+zip: lint test
 	cd addon; zip ../jsguardian.zip *
 
 lint:
@@ -15,6 +16,8 @@ lint:
 	tidy -eq addon/blockpage.html
 	./meta/check_schema_equals_preset.sh
 
+test:
+	npm test
 
 cp: zip
 	cp jsguardian.zip /tmp
