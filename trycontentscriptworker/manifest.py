@@ -1,10 +1,10 @@
+import datetime
 import json
 import time
-import datetime
 
 OUTFILE='manifest.json'
 
-a = {
+manifest = {
   "manifest_version": 2,
 
   "name": "test web worker content script",
@@ -25,7 +25,7 @@ a = {
 while True:
     time.sleep(1)
     current = datetime.datetime.now()
-    a['version'] = '{}.{}.{}'.format(current.hour, current.minute, current.second)
-    print(a['version'])
-    with open(OUTFILE) as f:
-        json.dump(a, open(OUTFILE, 'w'), indent=2)
+    manifest['version'] = '{}.{}.{}'.format(current.hour, current.minute, current.second)
+    print(manifest['version'])
+    with open(OUTFILE, 'w') as f:
+        json.dump(manifest, f, indent=2)
