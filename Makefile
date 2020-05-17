@@ -1,4 +1,4 @@
-.PHONY: test
+.PHONY: test zip lint cp push setup
 LINTER=npx eslint
 
 
@@ -16,8 +16,11 @@ lint:
 	tidy -eq addon/blockpage.html
 	./meta/check_schema_equals_preset.sh
 
-test:
+test: setup
 	npm test
+
+setup:
+	npm install
 
 cp: zip
 	cp jsguardian.zip /tmp
