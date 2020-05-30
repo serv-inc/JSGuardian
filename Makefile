@@ -28,3 +28,11 @@ cp: zip
 
 push:
 	git pull && git push
+
+
+dev:
+	(cd test/html && python3 -m http.server &)
+	cd trycontentscriptworker/ && ./manifest.py
+
+devstop:
+	killall python3
