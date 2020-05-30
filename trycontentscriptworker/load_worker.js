@@ -4,7 +4,6 @@ function getPageText() {
   var string = document.body.innerText || document.body.textContent;
   return new TextEncoder().encode(string);
 }
-//  new TextDecoder('utf-8').decode(uint8array); //"hiiiiiii"
 
 function stringToWorker(code) {
   const blob = new Blob([code], {type: 'application/javascript'});
