@@ -1,4 +1,4 @@
-"""extract single file to produce blockvals, example usage: 
+"""extract single file to produce blockvals, example usage:
 python ./extract.py /etc/e2guardian/lists/phraselists/pornograph/weighted"""
 from __future__ import print_function
 import itertools
