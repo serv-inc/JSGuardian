@@ -7,7 +7,7 @@ import logging
 import json
 
 #logging.basicConfig(level=logging.DEBUG)
-REMOVEBRACKETS={ord(">"): None, ord("<"): None}
+REMOVEBRACKETS=str.maketrans('', '', '<>')
 
 def from_line(line):
     '''single line to regex
