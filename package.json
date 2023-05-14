@@ -1,0 +1,26 @@
+{
+  "name": "web-content-filter",
+  "version": "1.6.1",
+  "description": "A content filter for websites, emulating dansguardian’s score-based filter in JavaScript.",
+  "main": "NONE",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jshint": "^2.10.2"
+  },
+  "scripts": {
+    "test": "make tes"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serv-inc/JSGuardian.git"
+  },
+  "author": "github.com/serv-inc",
+  "license": "LGPL-2.1-only",
+  "bugs": {
+    "url": "https://github.com/serv-inc/JSGuardian/issues"
+  },
+  "homepage": "https://github.com/serv-inc/JSGuardian#readme"
+}
