@@ -73,7 +73,7 @@ function isValid(urlString) {
   return typeof urlString === "string" && URL_RE.test(urlString);
 }
 
-// td: this is non-testable due to i, score, ... above, maybe refactor
+// TODO: this is hard to test due to i, score, ... above, maybe refactor
 function scan(
   pageText,
   sender,
