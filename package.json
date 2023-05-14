@@ -1,6 +1,6 @@
 {
   "name": "web-content-filter",
-  "version": "1.6.2",
+  "version": "1.6.4",
   "description": "A content filter for websites, emulating dansguardian’s score-based filter in JavaScript.",
   "main": "NONE",
   "directories": {
