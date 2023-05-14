@@ -27,7 +27,11 @@ def from_lines(lines):
         logging.debug(line)
         if not line.strip() or line.startswith("#"):
             continue
-        (r, s) = from_line(line)
+        try:
+            (r, s) = from_line(line)
+        except ValueError:
+            logging.error("error trying to decode %s", line)
+            continue
         if s in out:
             out[s] += "|" + r
         else:
@@ -38,4 +42,10 @@ def from_lines(lines):
 if __name__ == "__main__":
     import sys
     f = open(sys.argv[1])
-    print(json.dumps(from_lines(f)))
+    try:
+        print(json.dumps(from_lines(f)))
+    except UnicodeDecodeError:
+        logging.error("trying %s in latin-1", sys.argv[1])
+        f = open(sys.argv[1], encoding='latin-1')
+        print(json.dumps(from_lines(f)))
+# weighted jap has other enc, see file and also encodings.aliases.aliases
